@@ -1,4 +1,4 @@
-﻿export const COLLOCATION_EXERCISES = [
+﻿export const COLLOCATIONS_EXERCISES = [
   { sentence: 'Voy a ___ ejercicio todos los días.', options: ['hacer', 'tener', 'dar', 'ser'], answer: 'hacer', explanation: 'hacer ejercicio = to exercise' },
   { sentence: 'Tengo ___ de ir al baño urgentemente.', options: ['ganas', 'gusto', 'razón', 'sueño'], answer: 'ganas', explanation: 'tener ganas de = to feel like doing something' },
   { sentence: 'Ella siempre ___ las gracias cuando alguien la ayuda.', options: ['da', 'hace', 'toma', 'tiene'], answer: 'da', explanation: 'dar las gracias = to say thank you' },

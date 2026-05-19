@@ -1,4 +1,4 @@
-﻿export const SENTENCE_REORDER_EXERCISES = [
+﻿export const REORDER_EXERCISES = [
   { words: ['Me', 'llamo', 'Ana', 'y', 'soy', 'de', 'España'], answer: 'Me llamo Ana y soy de España', translation: 'Volám sa Ana a som zo Španielska.' },
   { words: ['Tengo', 'veintidós', 'años', 'y', 'estudio', 'español'], answer: 'Tengo veintidós años y estudio español', translation: 'Mám dvadsaťdva rokov a študujem španielčinu.' },
   { words: ['Me', 'gusta', 'mucho', 'el', 'café', 'por', 'la', 'mañana'], answer: 'Me gusta mucho el café por la mañana', translation: 'Ráno sa mi veľmi páči káva.' },

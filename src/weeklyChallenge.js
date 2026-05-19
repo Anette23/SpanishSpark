@@ -31,7 +31,7 @@ export function getCurrentWeekKey() {
   const d = new Date()
   const startOfYear = new Date(d.getFullYear(), 0, 1)
   const week = Math.floor((d - startOfYear) / 86400000 / 7)
-  return ${''}-
+  return d.getFullYear() + '-' + week
 }
 
 export function getCurrentChallenge() {

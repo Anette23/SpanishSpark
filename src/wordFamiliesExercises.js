@@ -1,4 +1,4 @@
-﻿export const WORD_FAMILY_EXERCISES = [
+﻿export const WORD_FAMILIES_EXERCISES = [
   { sentence: 'Trabajo es un sustantivo; ___ es el verbo.', options: ['trabajar', 'trabajador', 'trabajado', 'trabajosa'], answer: 'trabajar', family: 'trabajo', explanation: 'trabajo (noun) → trabajar (verb) → trabajador (adjective/noun)' },
   { sentence: 'Feliz es un adjetivo; ___ es el sustantivo.', options: ['felicidad', 'felizmente', 'felichar', 'felizo'], answer: 'felicidad', family: 'feliz', explanation: 'feliz → felicidad (happiness) → felizmente (happily)' },
   { sentence: 'Hablar es el infinitivo; ___ es el sustantivo.', options: ['habla', 'hablador', 'hablación', 'hablo'], answer: 'habla', family: 'hablar', explanation: 'hablar → habla (speech) → hablador (talkative person)' },

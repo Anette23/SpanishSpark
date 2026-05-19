@@ -1,5 +1,5 @@
 ﻿// Verbos reflexivos — key A1/A2 Spanish concept
-export const PHRASAL_VERB_EXERCISES = [
+export const PHRASAL_VERBS_EXERCISES = [
   { sentence: 'Yo ___ a las 7 de la mañana todos los dias.', options: ['me levanto', 'levanto', 'me salgo', 'se levanta'], answer: 'me levanto', explanation: 'levantarse (to get up): yo me levanto. Reflexive pronoun "me" is required.' },
   { sentence: '¿Cómo ___ tú?', options: ['te llamas', 'llamas', 'se llama', 'me llamas'], answer: 'te llamas', explanation: 'llamarse (to be named): tú te llamas.' },
   { sentence: 'Mi hermano ___ tarde los fines de semana.', options: ['se acuesta', 'acuesta', 'me acuesto', 'se acuesta'], answer: 'se acuesta', explanation: 'acostarse (to go to bed): él/ella se acuesta.' },
