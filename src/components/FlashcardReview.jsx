@@ -255,7 +255,7 @@ function ShadowingCard({ item, onResult }) {
     if (!supported) return
     window.speechSynthesis.cancel()
     const utt = new SpeechSynthesisUtterance(item.sentence)
-    utt.lang = 'en-US'
+    utt.lang = 'es-ES'
     utt.rate = 0.85
     utt.onstart = () => setIsSpeaking(true)
     utt.onend   = () => setIsSpeaking(false)

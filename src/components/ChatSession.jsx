@@ -19,7 +19,7 @@ function useVoiceInput(onResult) {
     const rec = new SR()
     rec.continuous     = false  // avoids Chrome Android repeating words across audio chunks
     rec.interimResults = true
-    rec.lang = 'en-US'
+    rec.lang = 'es-ES'
 
     rec.onresult = (e) => {
       let newFinal = '', interim = ''
@@ -67,11 +67,11 @@ function useVoiceInput(onResult) {
 }
 
 const STARTERS = [
-  "What did you do last weekend?",
-  "Tell me something interesting about Slovakia.",
-  "What are your plans for the next few months?",
-  "What's a hobby you'd like to try?",
-  "Describe your favourite place to relax.",
+  "¡Hola! ¿Cómo te llamas y de dónde eres?",
+  "¿Qué hiciste el fin de semana pasado?",
+  "¿Cuál es tu comida favorita?",
+  "¿Qué te gusta hacer en tu tiempo libre?",
+  "Cuéntame algo sobre tu familia.",
 ]
 
 function getStarter() {
@@ -145,7 +145,7 @@ export default function ChatSession({ onBack }) {
       <div className="chat-topbar">
         <button className="btn-back" onClick={onBack}>← Back</button>
         <div className="chat-title">
-          <span>💬</span> English Chat
+          <span>💬</span> Chat en español
         </div>
         {canGetFeedback && !showFeedback && (
           <button className="btn-feedback-chat" onClick={handleFeedback}>
@@ -197,7 +197,7 @@ export default function ChatSession({ onBack }) {
           <textarea
             ref={inputRef}
             className="chat-input"
-            placeholder={isRecording ? '🎙 Listening...' : 'Write in English...'}
+            placeholder={isRecording ? '🎙 Escuchando...' : 'Escribe en español...'}
             value={input}
             rows={2}
             onChange={e => setInput(e.target.value)}

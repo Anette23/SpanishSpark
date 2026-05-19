@@ -29,11 +29,11 @@ export default function OnboardingModal({ onClose }) {
         <div style={{ fontSize: 52, marginBottom: 10, lineHeight: 1 }}>⚡</div>
 
         <h2 style={{ margin: '0 0 8px', fontSize: 22, fontWeight: 700, color: 'var(--text)' }}>
-          Welcome to EnglishSpark!
+          ¡Bienvenida a SpanishSpark!
         </h2>
 
         <p style={{ margin: '0 0 20px', fontSize: 15, color: 'var(--muted)', lineHeight: 1.4 }}>
-          Your daily 2-minute English habit starts now.
+          Tu práctica diaria de español empieza ahora.
         </p>
 
         <div style={{ textAlign: 'left', marginBottom: 24 }}>

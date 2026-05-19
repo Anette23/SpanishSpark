@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { LISTENING_EXERCISES } from '../listeningExercises'
 
-const LEVELS = ['B1', 'B2']
+const LEVELS = ['A1', 'A2']
 
 function shuffle(arr) {
   const a = [...arr]
@@ -22,7 +22,7 @@ function buildDisplaySentence(sentence, blank) {
 }
 
 export default function ListeningGaps({ onBack }) {
-  const [level, setLevel] = useState('B1')
+  const [level, setLevel] = useState('A1')
   const [started, setStarted] = useState(false)
   const [exercises, setExercises] = useState([])
   const [idx, setIdx] = useState(0)
@@ -49,7 +49,7 @@ export default function ListeningGaps({ onBack }) {
   function speakSentence(sentence) {
     window.speechSynthesis?.cancel()
     const utter = new SpeechSynthesisUtterance(sentence)
-    utter.lang = 'en-GB'
+    utter.lang = 'es-ES'
     utter.rate = 0.85
     const voices = window.speechSynthesis?.getVoices() || []
     const voice = voices.find(v => v.lang.startsWith('en') && !v.name.includes('Google')) ||

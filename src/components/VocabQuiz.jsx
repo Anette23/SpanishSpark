@@ -101,14 +101,14 @@ export default function VocabQuiz({ onBack }) {
           onClick={() => { setMode('sk-en'); setIdx(0); setInput(''); setChecked(false); setCorrect(0); setWrong(0) }}
           style={{ flex: 1 }}
         >
-          Slovak → English
+          Eslovaco → Español
         </button>
         <button
           className={`level-btn ${!skToEn ? 'level-btn-active' : ''}`}
           onClick={() => { setMode('en-sk'); setIdx(0); setInput(''); setChecked(false); setCorrect(0); setWrong(0) }}
           style={{ flex: 1 }}
         >
-          English → Slovak
+          Español → Eslovaco
         </button>
       </div>
 
@@ -118,7 +118,7 @@ export default function VocabQuiz({ onBack }) {
             📅 Due for review
           </div>
         )}
-        <div className="prompt-label">{skToEn ? 'What is the English word for?' : 'What is the Slovak translation of?'}</div>
+        <div className="prompt-label">{skToEn ? '¿Cuál es la palabra en español?' : '¿Cuál es la traducción al eslovaco?'}</div>
         <div style={{ fontSize: 28, fontWeight: 900, color: 'var(--purple)', textAlign: 'center', padding: '8px 0' }}>
           {skToEn ? word.translation : word.word}
         </div>
@@ -133,7 +133,7 @@ export default function VocabQuiz({ onBack }) {
         <input
           className="vocab-search"
           type="text"
-          placeholder={skToEn ? 'Type the English word...' : 'Type the Slovak translation...'}
+          placeholder={skToEn ? 'Escribe la palabra en español...' : 'Escribe la traducción en eslovaco...'}
           value={input}
           onChange={e => setInput(e.target.value)}
           onKeyDown={e => { if (e.key === 'Enter' && !checked) handleCheck() }}

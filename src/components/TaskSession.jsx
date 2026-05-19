@@ -130,7 +130,7 @@ export default function TaskSession({ taskType, duration, onComplete, onBack }) 
       {!isWriting && (
         <>
           <div className="speaking-hint">
-            <p>🎤 Speak out loud in English about the prompt above.</p>
+            <p>🎤 Habla en español sobre el tema de arriba.</p>
             <p>Use the recorder below for automatic transcription, or write your answer manually.</p>
           </div>
 

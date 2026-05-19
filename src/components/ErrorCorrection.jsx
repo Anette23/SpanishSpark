@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { ERROR_CORRECTION_EXERCISES } from '../errorCorrectionExercises'
 
-const LEVELS = ['B1', 'B2', 'C1']
+const LEVELS = ['A1', 'A2']
 
 function shuffle(arr) {
   const a = [...arr]
@@ -35,7 +35,7 @@ function makeCorrectSentence(ex) {
 }
 
 export default function ErrorCorrection({ onBack }) {
-  const [level, setLevel] = useState('B1')
+  const [level, setLevel] = useState('A1')
   const [started, setStarted] = useState(false)
   const [exercises, setExercises] = useState([])
   const [idx, setIdx] = useState(0)

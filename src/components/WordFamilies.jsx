@@ -14,7 +14,7 @@ function normalise(str) {
   return str.trim().toLowerCase()
 }
 
-const LEVELS = ['B1', 'B2', 'C1']
+const LEVELS = ['A1', 'A2']
 
 export default function WordFamilies({ onBack }) {
   const [level, setLevel] = useState(null)

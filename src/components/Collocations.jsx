@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react'
 import { COLLOCATIONS_EXERCISES } from '../collocationsExercises'
 
-const LEVELS = ['B1', 'B2']
+const LEVELS = ['A1', 'A2']
 
 function shuffle(arr) {
   const a = [...arr]
@@ -52,7 +52,7 @@ function optionStyle(idx, selected, correctIdx, answered) {
 }
 
 export default function Collocations({ onBack }) {
-  const [level, setLevel] = useState('B1')
+  const [level, setLevel] = useState('A1')
   const [started, setStarted] = useState(false)
   const [exercises, setExercises] = useState([])
   const [idx, setIdx] = useState(0)

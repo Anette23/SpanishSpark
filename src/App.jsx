@@ -75,8 +75,8 @@ export default function App() {
       const today = getTodayStatus(s)
       if (today.writingDone && today.speakingDone) return
       localStorage.setItem(todayKey, '1')
-      new Notification('EnglishSpark ⚡', {
-        body: 'Time for your 2-minute English practice! Keep your streak alive 🔥',
+      new Notification('SpanishSpark ⚡', {
+        body: '¡Hora de tu práctica diaria de español! Mantén tu racha 🔥',
         icon: '/icon-192.png',
       })
     } catch {}

@@ -5,7 +5,7 @@ import { addReadingXP } from '../habitStore'
 import { getFeedback } from '../api'
 import TranslatableText from './TranslatableText'
 
-const LEVELS = ['B1', 'B2', 'C1']
+const LEVELS = ['A1', 'A2']
 const DIFFICULTY_OPTIONS = [
   { label: 'Too easy', value: 'easy', color: 'var(--blue)' },
   { label: 'Just right', value: 'ok', color: 'var(--green)' },
@@ -15,18 +15,16 @@ const DIFFICULTY_OPTIONS = [
 // ── Level picker ──────────────────────────────────────────────────────────────
 
 function LevelPicker({ onStart, onBack }) {
-  const [selectedLevel, setSelectedLevel] = useState('B2')
+  const [selectedLevel, setSelectedLevel] = useState('A1')
   const [stats, setStats] = useState(() => ({
-    B1: getLevelStats('B1', READING_EXERCISES),
-    B2: getLevelStats('B2', READING_EXERCISES),
-    C1: getLevelStats('C1', READING_EXERCISES),
+    A1: getLevelStats('A1', READING_EXERCISES),
+    A2: getLevelStats('A2', READING_EXERCISES),
   }))
 
   function refreshStats() {
     setStats({
-      B1: getLevelStats('B1', READING_EXERCISES),
-      B2: getLevelStats('B2', READING_EXERCISES),
-      C1: getLevelStats('C1', READING_EXERCISES),
+      A1: getLevelStats('A1', READING_EXERCISES),
+      A2: getLevelStats('A2', READING_EXERCISES),
     })
   }
 
@@ -55,7 +53,7 @@ function LevelPicker({ onStart, onBack }) {
 
       <div className="prompt-box" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
         <p style={{ fontSize: 15, color: 'var(--text)', lineHeight: 1.5 }}>
-          Read short English texts and answer comprehension questions. Tap any word to translate it to Slovak.
+          Read short Spanish texts and answer comprehension questions. Tap any word to translate it to Slovak.
         </p>
 
         <div style={{ display: 'flex', gap: 8 }}>
@@ -72,9 +70,8 @@ function LevelPicker({ onStart, onBack }) {
         </div>
 
         <div style={{ fontSize: 13, color: 'var(--muted)' }}>
-          {selectedLevel === 'B1' && 'Everyday topics, clear sentences, common vocabulary.'}
-          {selectedLevel === 'B2' && 'Complex topics, nuanced arguments, advanced vocabulary.'}
-          {selectedLevel === 'C1' && 'Academic and abstract texts, sophisticated vocabulary, subtle reasoning.'}
+          {selectedLevel === 'A1' && 'Basic topics, very simple sentences, common everyday words.'}
+          {selectedLevel === 'A2' && 'Simple everyday situations, familiar topics, straightforward sentences.'}
         </div>
 
         {/* Progress bar */}
@@ -182,13 +179,12 @@ export default function ReadingSession({ onBack }) {
   function toggleTTS(text) {
     if (ttsActive) { stopTTS(); return }
     const utter = new SpeechSynthesisUtterance(text)
-    utter.lang = 'en-GB'
+    utter.lang = 'es-ES'
     utter.rate = 0.9
-    // Prefer a natural English voice if available
     const voices = window.speechSynthesis.getVoices()
-    const enVoice = voices.find(v => v.lang.startsWith('en') && !v.name.includes('Google')) ||
-                    voices.find(v => v.lang.startsWith('en'))
-    if (enVoice) utter.voice = enVoice
+    const esVoice = voices.find(v => v.lang.startsWith('es') && !v.name.includes('Google')) ||
+                    voices.find(v => v.lang.startsWith('es'))
+    if (esVoice) utter.voice = esVoice
     utter.onend = () => setTtsActive(false)
     utter.onerror = () => setTtsActive(false)
     ttsRef.current = utter
@@ -480,14 +476,14 @@ export default function ReadingSession({ onBack }) {
           <div className="prompt-box">
             <div className="prompt-label">Your turn</div>
             <div className="prompt-text" style={{ fontSize: 15 }}>
-              What's your opinion on "{ex.title}"? Write 2–3 sentences in English.
+              ¿Qué piensas sobre "{ex.title}"? Escribe 2–3 oraciones en español.
             </div>
           </div>
 
           <textarea
             className="text-input"
             rows={4}
-            placeholder="I think that..."
+            placeholder="Creo que..."
             value={reaction}
             onChange={e => setReaction(e.target.value)}
             disabled={reactionFeedback !== null && reactionFeedback !== 'loading'}

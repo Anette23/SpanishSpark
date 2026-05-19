@@ -3,7 +3,7 @@ export default function FeedbackView({ feedback, loading, error, taskType }) {
     return (
       <div className="feedback-box feedback-loading">
         <div className="feedback-spinner" />
-        <p>Analyzing your English...</p>
+        <p>Analyzing your Spanish...</p>
       </div>
     )
   }

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { PHRASAL_VERBS_EXERCISES } from '../phrasalVerbsExercises'
 
-const LEVELS = ['B1', 'B2']
+const LEVELS = ['A1', 'A2']
 
 function shuffle(arr) {
   const a = [...arr]
@@ -20,7 +20,7 @@ function parseSentence(sentence) {
 }
 
 export default function PhrasalVerbs({ onBack }) {
-  const [level, setLevel]     = useState('B1')
+  const [level, setLevel]     = useState('A1')
   const [started, setStarted] = useState(false)
   const [exercises, setExercises] = useState([])
   const [idx, setIdx]         = useState(0)

@@ -81,7 +81,7 @@ export default function WeeklySession({ challenge, onComplete, onBack }) {
       {isSpeaking ? (
         <>
           <div className="speaking-hint">
-            <p>🎤 Speak your answer out loud in English.</p>
+            <p>🎤 Di tu respuesta en voz alta en español.</p>
             <p>Use the recorder for transcription, or write your answer below.</p>
           </div>
           <SpeechRecorder onTranscript={t => setText(t)} disabled={false} />

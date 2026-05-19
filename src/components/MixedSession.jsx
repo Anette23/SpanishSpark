@@ -203,7 +203,7 @@ function MixShadowCard({ item, onDone }) {
     if (!supported) return
     window.speechSynthesis.cancel()
     const utt = new SpeechSynthesisUtterance(item.sentence)
-    utt.lang = 'en-US'; utt.rate = 0.85
+    utt.lang = 'es-ES'; utt.rate = 0.85
     utt.onstart = () => setIsSpeaking(true)
     utt.onend   = () => setIsSpeaking(false)
     utt.onerror = () => setIsSpeaking(false)
@@ -239,7 +239,7 @@ function MixShadowCard({ item, onDone }) {
                   onClick={ok ? undefined : () => {
                     window.speechSynthesis.cancel()
                     const u = new SpeechSynthesisUtterance(word)
-                    u.lang = 'en-US'; u.rate = 0.8
+                    u.lang = 'es-ES'; u.rate = 0.8
                     window.speechSynthesis.speak(u)
                   }}
                 >{word}{' '}</span>
@@ -278,7 +278,7 @@ function pickRandom(arr) {
 
 // ── Main MixedSession ─────────────────────────────────────────────────────────
 export default function MixedSession({ onBack }) {
-  const level = localStorage.getItem('exerciseLevel') || 'B1'
+  const level = localStorage.getItem('exerciseLevel') || 'A1'
 
   const exercises = useMemo(() => {
     const synList  = getListForLevel(SYNONYM_WORDS, level)

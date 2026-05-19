@@ -14,7 +14,7 @@ export default function Dashboard({ state, todayStatus, onStartTask, onOpenSetti
   const [shareMsg, setShareMsg] = useState('')
 
   function handleShare() {
-    const text = `I'm on a 🔥 ${streak} day English learning streak with EnglishSpark! ⚡ myenglishspark.vercel.app`
+    const text = `¡Llevo 🔥 ${streak} días practicando español con SpanishSpark! ⚡`
     if (navigator.share) {
       navigator.share({ text }).catch(() => {})
     } else {
@@ -182,7 +182,7 @@ export default function Dashboard({ state, todayStatus, onStartTask, onOpenSetti
               <TaskCard
                 icon="✍️"
                 title="Writing"
-                desc="Write in English for the prompt of the day"
+                desc="Escribe en español sobre el tema del día"
                 done={todayStatus.writingDone}
                 color="purple"
                 onStart={() => onStartTask('writing')}
@@ -226,8 +226,8 @@ export default function Dashboard({ state, todayStatus, onStartTask, onOpenSetti
           </div>
 
           <button className="btn-chat" onClick={() => onStartTask('chat')}>
-            💬 Chat in English
-            <span className="btn-chat-sub">Free conversation with AI</span>
+            💬 Chat en español
+            <span className="btn-chat-sub">Conversación libre con IA</span>
           </button>
 
           {/* Word of the Day */}
@@ -326,7 +326,7 @@ export default function Dashboard({ state, todayStatus, onStartTask, onOpenSetti
               />
               <BonusCard
                 icon="🔗" title="Collocations"
-                desc="Which words go together? make/do, strong/heavy and more"
+                desc="¿Qué palabras van juntas? hacer/tener, mucho/muy y más"
                 color="blue" onStart={() => onStartTask('collocations')}
               />
               <BonusCard
@@ -336,7 +336,7 @@ export default function Dashboard({ state, todayStatus, onStartTask, onOpenSetti
               />
               <BonusCard
                 icon="💫" title="Phrasal Verbs"
-                desc="Choose the right particle: give up, put off, look into..."
+                desc="Verbos reflexivos: levantarse, llamarse, acostarse..."
                 color="teal" onStart={() => onStartTask('phrasalverbs')}
               />
               <BonusCard

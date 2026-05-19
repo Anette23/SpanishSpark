@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react'
 import { REORDER_EXERCISES } from '../sentenceReorderExercises'
 
-const LEVELS = ['B1', 'B2']
+const LEVELS = ['A1', 'A2']
 
 function shuffle(arr) {
   const a = [...arr]
@@ -13,7 +13,7 @@ function shuffle(arr) {
 }
 
 export default function SentenceReorder({ onBack }) {
-  const [level, setLevel] = useState('B1')
+  const [level, setLevel] = useState('A1')
   const [started, setStarted] = useState(false)
   const [exercises, setExercises] = useState([])
   const [idx, setIdx] = useState(0)
@@ -78,7 +78,7 @@ export default function SentenceReorder({ onBack }) {
         </div>
         <div className="prompt-box" style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
           <p style={{ fontSize: 15, color: 'var(--text)', lineHeight: 1.5 }}>
-            Arrange the words into a correct English sentence. Tap a word to place it, tap a placed word to move it back.
+            Arrange the words into a correct Spanish sentence. Tap a word to place it, tap a placed word to move it back.
           </p>
           <div style={{ display: 'flex', gap: 8 }}>
             {LEVELS.map(l => (
