@@ -1,0 +1,17 @@
+﻿export const WORD_FAMILY_EXERCISES = [
+  { sentence: 'Trabajo es un sustantivo; ___ es el verbo.', options: ['trabajar', 'trabajador', 'trabajado', 'trabajosa'], answer: 'trabajar', family: 'trabajo', explanation: 'trabajo (noun) → trabajar (verb) → trabajador (adjective/noun)' },
+  { sentence: 'Feliz es un adjetivo; ___ es el sustantivo.', options: ['felicidad', 'felizmente', 'felichar', 'felizo'], answer: 'felicidad', family: 'feliz', explanation: 'feliz → felicidad (happiness) → felizmente (happily)' },
+  { sentence: 'Hablar es el infinitivo; ___ es el sustantivo.', options: ['habla', 'hablador', 'hablación', 'hablo'], answer: 'habla', family: 'hablar', explanation: 'hablar → habla (speech) → hablador (talkative person)' },
+  { sentence: 'Bonito es el adjetivo; ___ es el sustantivo.', options: ['belleza', 'bonitar', 'bonitura', 'bonición'], answer: 'belleza', family: 'bonito', explanation: 'bonito/bello → belleza (beauty)' },
+  { sentence: 'Importante es un adjetivo; ___ es el sustantivo.', options: ['importancia', 'importar', 'importantez', 'importado'], answer: 'importancia', family: 'importante', explanation: 'importante → importancia (importance)' },
+  { sentence: 'Comer es un verbo; ___ es la persona que come.', options: ['comensal', 'comedor', 'comiente', 'comeón'], answer: 'comensal', family: 'comer', explanation: 'comer → comensal (diner/table companion) → comedor (dining room or big eater)' },
+  { sentence: 'Estudiar es el verbo; ___ es la persona que estudia.', options: ['estudiante', 'estudioso', 'estudiación', 'estudiador'], answer: 'estudiante', family: 'estudiar', explanation: 'estudiar → estudiante (student) → estudio (study) → estudioso (studious)' },
+  { sentence: 'Rápido es el adjetivo; ___ es el adverbio.', options: ['rápidamente', 'rapidez', 'rapidar', 'rápidon'], answer: 'rápidamente', family: 'rápido', explanation: 'rápido → rápidamente (quickly) → rapidez (speed)' },
+  { sentence: 'Leer es el verbo; ___ es la persona que lee.', options: ['lector', 'leedor', 'leyente', 'leísta'], answer: 'lector', family: 'leer', explanation: 'leer → lector (reader) → lectura (reading) → legible (readable)' },
+  { sentence: 'Ayuda es el sustantivo; ___ es el verbo.', options: ['ayudar', 'ayudante', 'ayudoso', 'ayudación'], answer: 'ayudar', family: 'ayuda', explanation: 'ayuda (help) → ayudar (to help) → ayudante (helper/assistant)' },
+  { sentence: 'Fácil es el adjetivo; ___ es el sustantivo.', options: ['facilidad', 'facicar', 'facitura', 'facileza'], answer: 'facilidad', family: 'fácil', explanation: 'fácil → facilidad (ease) → fácilmente (easily)' },
+  { sentence: 'Difícil es el adjetivo; ___ es el sustantivo.', options: ['dificultad', 'dificultar', 'dificileza', 'dificilidad'], answer: 'dificultad', family: 'difícil', explanation: 'difícil → dificultad (difficulty) → dificultar (to make difficult)' },
+  { sentence: 'Amor es el sustantivo; ___ es el verbo.', options: ['amar', 'amador', 'amación', 'amoroso'], answer: 'amar', family: 'amor', explanation: 'amor (love) → amar (to love) → amoroso (loving) → amado (loved)' },
+  { sentence: 'Verdad es el sustantivo; ___ es el adjetivo.', options: ['verdadero', 'verdadar', 'verdadal', 'verdador'], answer: 'verdadero', family: 'verdad', explanation: 'verdad (truth) → verdadero (true) → verdaderamente (truly)' },
+  { sentence: 'Vivir es el verbo; ___ es el sustantivo.', options: ['vida', 'viviente', 'vivación', 'vivor'], answer: 'vida', family: 'vivir', explanation: 'vivir → vida (life) → viviente (living) → vivido (experienced)' },
+]
