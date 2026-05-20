@@ -6,6 +6,8 @@ export default function Timer({ duration, onComplete, taskType }) {
   const [running, setRunning] = useState(false)
   const [done, setDone] = useState(false)
   const intervalRef = useRef(null)
+  const onCompleteRef = useRef(onComplete)
+  useEffect(() => { onCompleteRef.current = onComplete }, [onComplete])
 
   useEffect(() => {
     if (running && timeLeft > 0) {
@@ -15,7 +17,7 @@ export default function Timer({ duration, onComplete, taskType }) {
             clearInterval(intervalRef.current)
             setRunning(false)
             setDone(true)
-            onComplete()
+            onCompleteRef.current()
             return 0
           }
           return t - 1

@@ -74,7 +74,10 @@ Respond ONLY with the JSON object, no other text.`,
     if (!match) {
       return res.status(502).json({ error: 'Unexpected AI response format' })
     }
-    const json = JSON.parse(match[0])
+    let json
+    try { json = JSON.parse(match[0]) } catch {
+      return res.status(502).json({ error: 'Invalid AI response format' })
+    }
     return res.status(200).json(json)
   } catch {
     return res.status(500).json({ error: 'Internal server error' })

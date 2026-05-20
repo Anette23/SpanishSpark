@@ -1,11 +1,14 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { clearNewMilestone } from '../habitStore'
 
 export default function MilestoneModal({ milestone, onClose }) {
+  const onCloseRef = useRef(onClose)
+  useEffect(() => { onCloseRef.current = onClose }, [onClose])
+
   useEffect(() => {
     const t = setTimeout(() => {
       clearNewMilestone()
-      onClose()
+      onCloseRef.current()
     }, 6000)
     return () => clearTimeout(t)
   }, [])

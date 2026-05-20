@@ -9,7 +9,12 @@ export default async function handler(req, res) {
   if (!apiKey) return res.status(503).json({ error: 'Not configured' })
 
   const { word, context } = req.body ?? {}
-  if (!word) return res.status(400).json({ error: 'Missing word' })
+  if (!word || typeof word !== 'string' || word.length > 100) {
+    return res.status(400).json({ error: 'Invalid word' })
+  }
+  if (context !== undefined && (typeof context !== 'string' || context.length > 500)) {
+    return res.status(400).json({ error: 'Invalid context' })
+  }
 
   const prompt = context
     ? `Translate the English word or phrase "${word}" to Slovak. The sentence context is: "${context}". Reply with ONLY the Slovak translation — one short phrase, no explanation.`

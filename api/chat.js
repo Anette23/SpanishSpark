@@ -96,7 +96,9 @@ Rules:
     if (isFeedback) {
       const match = text.match(/\{[\s\S]*\}/)
       if (!match) return res.status(502).json({ error: 'Unexpected response format' })
-      return res.status(200).json(JSON.parse(match[0]))
+      try { return res.status(200).json(JSON.parse(match[0])) } catch {
+        return res.status(502).json({ error: 'Invalid AI response format' })
+      }
     }
 
     return res.status(200).json({ reply: text.trim() })

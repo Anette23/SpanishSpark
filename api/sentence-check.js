@@ -11,8 +11,11 @@
   if (!apiKey) return res.status(503).json({ error: 'NOT_CONFIGURED' })
 
   const { word, sentence } = req.body ?? {}
-  if (!word || !sentence || typeof sentence !== 'string' || !sentence.trim()) {
-    return res.status(400).json({ error: 'Missing word or sentence' })
+  if (!word || typeof word !== 'string' || word.length > 100) {
+    return res.status(400).json({ error: 'Invalid word' })
+  }
+  if (!sentence || typeof sentence !== 'string' || !sentence.trim()) {
+    return res.status(400).json({ error: 'Missing sentence' })
   }
 
   const sanitized = sentence
@@ -53,7 +56,9 @@ Reply ONLY with JSON: { "ok": true/false, "feedback": "one short sentence" }
     const raw = data.content?.[0]?.text ?? ''
     const match = raw.match(/\{[\s\S]*\}/)
     if (!match) return res.status(502).json({ error: 'Bad AI response' })
-    return res.status(200).json(JSON.parse(match[0]))
+    try { return res.status(200).json(JSON.parse(match[0])) } catch {
+      return res.status(502).json({ error: 'Invalid AI response format' })
+    }
   } catch {
     return res.status(500).json({ error: 'Internal server error' })
   }
