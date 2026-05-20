@@ -1,0 +1,36 @@
+﻿// SK → ES translation exercises for A1/A2 Spanish learners
+
+export const TRANSLATION_EXERCISES = [
+  // A1
+  { level: 'A1', category: 'predstavenie', sk: 'Volám sa Ana a mám dvadsať rokov.', es: 'Me llamo Ana y tengo veinte años.', tip: 'Remember: "tener X años" for age, not "ser".' },
+  { level: 'A1', category: 'predstavenie', sk: 'Som zo Slovenska ale bývam v Španielsku.', es: 'Soy de Eslovaquia pero vivo en España.', tip: '"Ser de" for origin, "vivir en" for current location.' },
+  { level: 'A1', category: 'predstavenie', sk: 'Pracujem v kancelárii od pondelka do piatku.', es: 'Trabajo en una oficina de lunes a viernes.', tip: '"De lunes a viernes" = from Monday to Friday.' },
+  { level: 'A1', category: 'ser/estar', sk: 'Moja mama je veľmi milá.', es: 'Mi madre es muy simpática.', tip: '"Ser" for permanent personality traits.' },
+  { level: 'A1', category: 'ser/estar', sk: 'Dnes som unavená.', es: 'Hoy estoy cansada.', tip: '"Estar" for temporary states.' },
+  { level: 'A1', category: 'ser/estar', sk: 'Kaviareň je blízko stanice.', es: 'La cafetería está cerca de la estación.', tip: '"Estar" for location.' },
+  { level: 'A1', category: 'gustar', sk: 'Páčia sa mi mačky.', es: 'Me gustan los gatos.', tip: 'Plural noun → gustan.' },
+  { level: 'A1', category: 'gustar', sk: 'Môjmu bratovi sa páči futbal.', es: 'A mi hermano le gusta el fútbol.', tip: '"A + person + le gusta" for third person.' },
+  { level: 'A1', category: 'tener', sk: 'Mám hlad. Môžeme ísť jesť?', es: 'Tengo hambre. ¿Podemos ir a comer?', tip: '"Tener hambre" not "estar hambrienta".' },
+  { level: 'A1', category: 'tener', sk: 'Je mi zima. Môžeš zavrieť okno?', es: 'Tengo frío. ¿Puedes cerrar la ventana?', tip: '"Tener frío" for feeling cold.' },
+  { level: 'A1', category: 'rutina', sk: 'Každý deň vstanem o siedmej.', es: 'Todos los días me levanto a las siete.', tip: 'Reflexive: "levantarse". "A las siete" for time.' },
+  { level: 'A1', category: 'rutina', sk: 'Raňajkujem tostované chleby s kávou.', es: 'Desayuno tostadas con café.', tip: 'No article needed after "desayuno" + food.' },
+  { level: 'A1', category: 'miejsca', sk: 'Idem na nákupy do centra.', es: 'Voy de compras al centro.', tip: '"Ir de compras" = to go shopping. "A + el" → "al".' },
+  { level: 'A1', category: 'miejsca', sk: 'Kde je najbližšia lekáreň?', es: '¿Dónde está la farmacia más cercana?', tip: '"Estar" for location of places.' },
+  { level: 'A1', category: 'rodina', sk: 'Mám staršieho brata a mladšiu sestru.', es: 'Tengo un hermano mayor y una hermana menor.', tip: '"Mayor/menor" for older/younger.' },
+  // A2
+  { level: 'A2', category: 'minulosť', sk: 'Včera som išla do kina s priateľkou.', es: 'Ayer fui al cine con mi amiga.', tip: 'Preterite: "ir" → "fui". Note: "al cine" = a + el.' },
+  { level: 'A2', category: 'minulosť', sk: 'Minulý víkend sme varili doma.', es: 'El fin de semana pasado cocinamos en casa.', tip: '"El fin de semana pasado" + preterite.' },
+  { level: 'A2', category: 'minulosť', sk: 'Nezavolala som ti, pretože som bola zaneprázdnená.', es: 'No te llamé porque estaba ocupada.', tip: 'Preterite for completed action; imperfect for ongoing state.' },
+  { level: 'A2', category: 'plány', sk: 'Zajtra idem navštíviť starú mamu.', es: 'Mañana voy a visitar a mi abuela.', tip: '"Ir a + infinitive" for near future. "A" before a person (personal a).' },
+  { level: 'A2', category: 'plány', sk: 'V lete plánujeme ísť do Andalúzie.', es: 'En verano vamos a ir a Andalucía.', tip: '"En verano" = in summer. "Ir a + ir" is fine.' },
+  { level: 'A2', category: 'od kedy', sk: 'Učím sa španielčinu šesť mesiacov.', es: 'Estudio español desde hace seis meses.', tip: '"Desde hace + time" with present tense for ongoing actions.' },
+  { level: 'A2', category: 'od kedy', sk: 'Bývam v tomto byte dva roky.', es: 'Vivo en este piso desde hace dos años.', tip: 'Still living there → present + "desde hace".' },
+  { level: 'A2', category: 'porovnanie', sk: 'Barcelona je väčšia ako Sevilla.', es: 'Barcelona es más grande que Sevilla.', tip: '"Más + adjective + que" for comparisons.' },
+  { level: 'A2', category: 'porovnanie', sk: 'Tento reštaurácia je najlepšia v meste.', es: 'Este restaurante es el mejor de la ciudad.', tip: '"El mejor" = the best. Superlative: "el/la más...".' },
+  { level: 'A2', category: 'reštaurácia', sk: 'Chcela by som tanier paelly a pohár vína.', es: 'Quisiera un plato de paella y una copa de vino.', tip: '"Quisiera" is a polite way to order (conditional of querer).' },
+  { level: 'A2', category: 'reštaurácia', sk: 'Môžete mi priniesť účet, prosím?', es: '¿Me puede traer la cuenta, por favor?', tip: '"Me + puede + traer" — indirect object pronoun before the verb.' },
+  { level: 'A2', category: 'zdravie', sk: 'Bolí ma hlava od rána.', es: 'Me duele la cabeza desde esta mañana.', tip: '"Doler" works like "gustar": me duele (singular) / me duelen (plural).' },
+  { level: 'A2', category: 'zdravie', sk: 'Chcela by som sa objednať k lekárovi.', es: 'Quisiera pedir cita con el médico.', tip: '"Pedir cita" = to make an appointment.' },
+  { level: 'A2', category: 'nakupovanie', sk: 'Máte toto aj vo väčšej veľkosti?', es: '¿Tiene esto en una talla más grande?', tip: '"¿Tiene...?" formal singular. "Talla" for clothing size.' },
+  { level: 'A2', category: 'nakupovanie', sk: 'Je to príliš drahé. Môžete mi dať zľavu?', es: 'Es demasiado caro. ¿Puede hacerme un descuento?', tip: '"Hacer un descuento" = to give a discount.' },
+]

@@ -21,6 +21,11 @@ import Collocations from './components/Collocations'
 import WordFamilies from './components/WordFamilies'
 import PhrasalVerbs from './components/PhrasalVerbs'
 import ListeningDictation from './components/ListeningDictation'
+import GrammarCards from './components/GrammarCards'
+import VocabularyPacks from './components/VocabularyPacks'
+import TranslationExercise from './components/TranslationExercise'
+import DialogExercise from './components/DialogExercise'
+import NumbersExercise from './components/NumbersExercise'
 import { loadState, getTodayStatus, completeTask, getSessionDuration, completeWeeklyChallenge, clearNewMilestone, clearNewLevel, useStreakFreeze, getStreakFreezes } from './habitStore'
 import { getCurrentChallenge } from './weeklyChallenge'
 
@@ -163,6 +168,11 @@ export default function App() {
       {view === 'wordfamilies'    && <WordFamilies onBack={handleBack} />}
       {view === 'phrasalverbs'    && <PhrasalVerbs onBack={handleBack} />}
       {view === 'dictation'       && <ListeningDictation onBack={handleBack} />}
+      {view === 'grammarcards'    && <GrammarCards onBack={handleBack} />}
+      {view === 'vocabpacks'      && <VocabularyPacks onBack={handleBack} />}
+      {view === 'translation'     && <TranslationExercise onBack={handleBack} />}
+      {view === 'dialog'          && <DialogExercise onBack={handleBack} />}
+      {view === 'numbers'         && <NumbersExercise onBack={handleBack} />}
       {view === 'weekly' && (
         <WeeklySession
           challenge={getCurrentChallenge()}

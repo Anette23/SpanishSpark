@@ -145,6 +145,14 @@ export default function ListeningDictation({ onBack }) {
         >
           🐢 Slower
         </button>
+        <button
+          className="btn-listen"
+          onClick={() => speak(0.5)}
+          disabled={isSpeaking || !('speechSynthesis' in window) || checked}
+          style={{ flex: 1 }}
+        >
+          🐌 Very slow
+        </button>
       </div>
 
       {!checked && (

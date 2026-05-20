@@ -488,9 +488,10 @@ function SynonymsExercise({ item, allItems, onNext }) {
 }
 
 function GrammarExercise({ item, onNext }) {
-  const [input, setInput]     = useState('')
-  const [checked, setChecked] = useState(false)
-  const [phase, setPhase]     = useState('blank') // 'blank' | 'useit'
+  const [input, setInput]         = useState('')
+  const [checked, setChecked]     = useState(false)
+  const [hintVisible, setHintVisible] = useState(false)
+  const [phase, setPhase]         = useState('blank') // 'blank' | 'useit'
   const userAnswer = input.trim().toLowerCase()
   const isCorrect  = checked && item.answer.includes(userAnswer)
   const [before, after] = item.phrase.split('___')
@@ -512,6 +513,22 @@ function GrammarExercise({ item, onNext }) {
             <>{before}<span className="answer-blank">______</span>{after}</>
           )}
         </p>
+        {!checked && item.hint && (
+          <div style={{ marginTop: 10 }}>
+            {hintVisible ? (
+              <p style={{ fontSize: 13, color: '#065f46', background: '#d1fae5', borderRadius: 8, padding: '6px 12px', margin: 0 }}>
+                💡 {item.hint}
+              </p>
+            ) : (
+              <button
+                onClick={() => setHintVisible(true)}
+                style={{ background: 'none', border: '1px dashed var(--muted)', borderRadius: 8, padding: '4px 12px', fontSize: 13, color: 'var(--muted)', cursor: 'pointer' }}
+              >
+                💡 Show hint
+              </button>
+            )}
+          </div>
+        )}
       </div>
 
       <div className="prep-input-row">
@@ -740,6 +757,15 @@ function ShadowingExercise({ sentence, onNext }) {
           style={{ flex: 1 }}
         >
           🐢 Slower
+        </button>
+        <button
+          className="btn-listen"
+          onClick={() => listen(0.5)}
+          disabled={isSpeaking || !supported}
+          type="button"
+          style={{ flex: 1 }}
+        >
+          🐌 Very slow
         </button>
       </div>
 

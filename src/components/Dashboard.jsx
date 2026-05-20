@@ -2,6 +2,9 @@ import { MILESTONES, getLevel, getNextMilestone, getSessionDuration, formatDurat
 import { getCurrentChallenge, isWeeklyChallengeComplete } from '../weeklyChallenge'
 import { getWordOfDay } from '../wordOfTheDay'
 import { saveWord, getDueWords, getVocabulary } from '../vocabularyStore'
+import { getFlashcardStats } from '../flashcardStore'
+import { SYNONYM_WORDS, PREPOSITION_PHRASES, IDIOM_PHRASES, SHADOWING_SENTENCES } from '../bonusExercises'
+import { GRAMMAR_EXERCISES } from '../grammarExercises'
 import { useState } from 'react'
 
 export default function Dashboard({ state, todayStatus, onStartTask, onOpenSettings, onOpenHistory, onOpenStats, darkMode, onToggleDark, freezesAvailable, onFreezeStreak }) {
@@ -10,6 +13,7 @@ export default function Dashboard({ state, todayStatus, onStartTask, onOpenSetti
     const vocab = getVocabulary()
     return vocab.some(w => w.word === wordOfDay.word)
   })
+  const [wotdSpeaking, setWotdSpeaking] = useState(false)
   const vocabDueCount = getDueWords().length
   const [shareMsg, setShareMsg] = useState('')
 
@@ -25,6 +29,18 @@ export default function Dashboard({ state, todayStatus, onStartTask, onOpenSetti
     }
   }
 
+  function speakWord() {
+    if (wotdSpeaking || !('speechSynthesis' in window)) return
+    window.speechSynthesis.cancel()
+    const utt = new SpeechSynthesisUtterance(wordOfDay.word)
+    utt.lang = 'es-ES'
+    utt.rate = 0.85
+    utt.onstart = () => setWotdSpeaking(true)
+    utt.onend = () => setWotdSpeaking(false)
+    utt.onerror = () => setWotdSpeaking(false)
+    window.speechSynthesis.speak(utt)
+  }
+
   function handleSaveWotd() {
     saveWord({ word: wordOfDay.word, translation: wordOfDay.sk, context: wordOfDay.example, source: 'wotd' })
     setWotdSaved(true)
@@ -37,6 +53,19 @@ export default function Dashboard({ state, todayStatus, onStartTask, onOpenSetti
 
   const weeklyChallenge = getCurrentChallenge()
   const weeklyDone      = isWeeklyChallengeComplete(state)
+
+  // Recommended exercise of the day — rotates daily through beginner-friendly picks
+  const DAILY_RECS = [
+    { view: 'grammarcards', icon: '📋', title: 'Grammar Cards', desc: 'Review A1 grammar rules — great for beginners!' },
+    { view: 'translation',  icon: '🔁', title: 'Prelož vetu',   desc: 'Translate Slovak sentences into Spanish.' },
+    { view: 'numbers',      icon: '🔢', title: 'Čísla a čas',   desc: 'Practice numbers, clock times and days.' },
+    { view: 'grammar',      icon: '📚', title: 'Grammar Fill',  desc: 'Fill in the blank — verbs and key structures.' },
+    { view: 'dialog',       icon: '🗣️', title: 'Dialóg',        desc: 'Practice a scripted real-life conversation.' },
+    { view: 'reading',      icon: '📖', title: 'Reading',       desc: 'Read a short text and answer questions.' },
+    { view: 'errorcorrection', icon: '🔧', title: 'Error Correction', desc: 'Spot the grammar mistake in each sentence.' },
+  ]
+  const dayOfYear = Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0)) / 86400000)
+  const todayRec = DAILY_RECS[dayOfYear % DAILY_RECS.length]
 
   const streakMilestoneProgress = nextMilestone
     ? ((streak / nextMilestone.days) * 100)
@@ -172,6 +201,8 @@ export default function Dashboard({ state, todayStatus, onStartTask, onOpenSetti
               })}
             </div>
           </div>
+
+          <SkillsProgress />
         </div>
 
         {/* Right column: today's tasks & bonus */}
@@ -236,8 +267,16 @@ export default function Dashboard({ state, todayStatus, onStartTask, onOpenSetti
               <span className="wotd-badge">{wordOfDay.level}</span>
               <span className="wotd-label">Palabra del día</span>
             </div>
-            <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, flexWrap: 'wrap', marginBottom: 4 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap', marginBottom: 4 }}>
               <div className="wotd-word" style={{ marginBottom: 0 }}>{wordOfDay.word}</div>
+              <button
+                onClick={speakWord}
+                disabled={wotdSpeaking || !('speechSynthesis' in window)}
+                style={{ background: 'rgba(255,255,255,0.2)', border: 'none', borderRadius: 8, padding: '4px 10px', cursor: 'pointer', fontSize: 16, color: '#fff', flexShrink: 0 }}
+                title="Hear pronunciation"
+              >
+                {wotdSpeaking ? '🔊' : '▶'}
+              </button>
               <div style={{ fontSize: 14, color: 'rgba(255,255,255,0.85)', fontWeight: 600 }}>🇸🇰 {wordOfDay.sk}</div>
             </div>
             <div className="wotd-definition">{wordOfDay.definition}</div>
@@ -251,6 +290,24 @@ export default function Dashboard({ state, todayStatus, onStartTask, onOpenSetti
             </button>
           </div>
 
+          {/* Recommended exercise of the day */}
+          <div style={{ background: 'linear-gradient(135deg, #6366f1, #8b5cf6)', borderRadius: 16, padding: '14px 18px', marginBottom: 4 }}>
+            <div style={{ fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.7)', letterSpacing: 1, marginBottom: 6 }}>✨ ODPORÚČANÉ DNES</div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+              <span style={{ fontSize: 28 }}>{todayRec.icon}</span>
+              <div style={{ flex: 1 }}>
+                <div style={{ fontWeight: 700, color: '#fff', fontSize: 15 }}>{todayRec.title}</div>
+                <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.8)', marginTop: 2 }}>{todayRec.desc}</div>
+              </div>
+              <button
+                onClick={() => onStartTask(todayRec.view)}
+                style={{ background: 'rgba(255,255,255,0.2)', border: '1.5px solid rgba(255,255,255,0.4)', borderRadius: 10, color: '#fff', fontWeight: 700, fontSize: 14, padding: '8px 14px', cursor: 'pointer', whiteSpace: 'nowrap' }}
+              >
+                Začať →
+              </button>
+            </div>
+          </div>
+
           <div className="bonus-section">
             <h3>Extra Practice</h3>
             <p className="bonus-note">Optional — not required for streak</p>
@@ -261,6 +318,10 @@ export default function Dashboard({ state, todayStatus, onStartTask, onOpenSetti
             <button className="btn-vocab" onClick={() => onStartTask('reading')}>
               📖 Reading
               <span className="btn-vocab-sub">Read short texts and answer comprehension questions</span>
+            </button>
+            <button className="btn-vocab" onClick={() => onStartTask('vocabpacks')} style={{ background: 'linear-gradient(135deg, #f59e0b, #ef4444)' }}>
+              📦 Vocabulary Packs
+              <span className="btn-vocab-sub">Tematické slovíčka: reštaurácia, rodina, čas...</span>
             </button>
             <button className="btn-vocab" onClick={() => onStartTask('vocabulary')} style={{ background: 'linear-gradient(135deg, #10b981, #3b82f6)' }}>
               <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
@@ -298,6 +359,26 @@ export default function Dashboard({ state, todayStatus, onStartTask, onOpenSetti
                 icon="📚" title="Grammar"
                 desc="Fill in the blank — tenses, articles, conditionals and more"
                 color="green" onStart={() => onStartTask('grammar')}
+              />
+              <BonusCard
+                icon="📋" title="Grammar Cards"
+                desc="Key A1/A2 rules explained with examples — tap to explore"
+                color="green" onStart={() => onStartTask('grammarcards')}
+              />
+              <BonusCard
+                icon="🔁" title="Prelož vetu"
+                desc="Translate Slovak sentences into Spanish"
+                color="purple" onStart={() => onStartTask('translation')}
+              />
+              <BonusCard
+                icon="🗣️" title="Dialóg"
+                desc="Scripted conversations — café, doctor, hotel..."
+                color="blue" onStart={() => onStartTask('dialog')}
+              />
+              <BonusCard
+                icon="🔢" title="Čísla a čas"
+                desc="Čísla, hodiny, dni, mesiace — precvič po španielsky"
+                color="teal" onStart={() => onStartTask('numbers')}
               />
               <BonusCard
                 icon="🔀" title="Reorder"
@@ -412,6 +493,53 @@ function TaskCard({ icon, title, desc, done, color, onStart }) {
         ? <div className="task-card-complete">Done!</div>
         : <button className={`btn-task btn-task-${color}`} onClick={onStart}>Start</button>
       }
+    </div>
+  )
+}
+
+function SkillsProgress() {
+  const level = localStorage.getItem('exerciseLevel') || 'A1'
+  const skills = [
+    { key: 'grammar',      label: 'Gramatika',    icon: '📚', items: GRAMMAR_EXERCISES.filter(e => e.level === level) },
+    { key: 'prepositions', label: 'Predložky',    icon: '📝', items: PREPOSITION_PHRASES.filter(e => e.level === level) },
+    { key: 'idioms',       label: 'Idiomy',       icon: '💬', items: IDIOM_PHRASES.filter(e => e.level === level) },
+    { key: 'synonyms',     label: 'Synonymá',     icon: '🔤', items: SYNONYM_WORDS.filter(e => e.level === level) },
+    { key: 'shadowing',    label: 'Shadowing',    icon: '🎧', items: SHADOWING_SENTENCES.filter(e => e.level === level) },
+  ]
+
+  const rows = skills.map(s => {
+    const stats = getFlashcardStats(s.key, s.items)
+    const pct = stats.total > 0 ? Math.round(stats.learned / stats.total * 100) : 0
+    return { ...s, ...stats, pct }
+  })
+
+  const anyStarted = rows.some(r => r.learned > 0 || r.due > 0)
+
+  return (
+    <div className="milestones-section">
+      <h3>Môj pokrok — {level}</h3>
+      {!anyStarted ? (
+        <p style={{ fontSize: 13, color: 'var(--muted)', margin: '4px 0 0' }}>
+          Ešte žiadne cvičenia. Začni s Extra Practice! 👇
+        </p>
+      ) : (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 6 }}>
+          {rows.map(r => (
+            <div key={r.key}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13, marginBottom: 3 }}>
+                <span style={{ color: 'var(--text)' }}>{r.icon} {r.label}</span>
+                <span style={{ color: 'var(--muted)', fontSize: 12 }}>
+                  {r.learned}/{r.total}
+                  {r.due > 0 && <span style={{ color: '#f59e0b', fontWeight: 700, marginLeft: 6 }}> · {r.due} due</span>}
+                </span>
+              </div>
+              <div style={{ height: 6, borderRadius: 4, background: 'var(--border)', overflow: 'hidden' }}>
+                <div style={{ height: '100%', width: `${r.pct}%`, background: 'var(--green)', borderRadius: 4, transition: 'width 0.4s' }} />
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   )
 }
