@@ -97,11 +97,11 @@ export default function Dashboard({ state, todayStatus, onStartTask, onOpenSetti
         <div className="streak-mini-body">
           <div className="streak-mini-top">
             <span className="streak-mini-num">{streak}</span>
-            <span className="streak-mini-label"> day streak</span>
+            <span className="streak-mini-label"> dňová séria</span>
             {(todayStatus.writingDone || todayStatus.speakingDone) &&
-              <span className="streak-mini-done">✓ today</span>
+              <span className="streak-mini-done">✓ dnes</span>
             }
-            {todayFrozen && <span className="streak-mini-done" style={{background:'#bfdbfe',color:'#1e40af'}}>🧊 frozen</span>}
+            {todayFrozen && <span className="streak-mini-done" style={{background:'#bfdbfe',color:'#1e40af'}}>🧊 zmrazená</span>}
           </div>
           {nextMilestone && (
             <div className="streak-mini-bar-wrap">
@@ -120,12 +120,12 @@ export default function Dashboard({ state, todayStatus, onStartTask, onOpenSetti
           <div className="streak-card">
             <div className="streak-flame">🔥</div>
             <div className="streak-number">{streak}</div>
-            <div className="streak-label">day streak</div>
-            <div className="streak-best">Best: {longestStreak} days</div>
-            {todayFrozen && <div className="freeze-badge">🧊 Streak frozen today</div>}
+            <div className="streak-label">dňová séria</div>
+            <div className="streak-best">Rekord: {longestStreak} dní</div>
+            {todayFrozen && <div className="freeze-badge">🧊 Séria dnes zmrazená</div>}
             {showFreeze && (
               <button className="btn-freeze" onClick={onFreezeStreak}>
-                🧊 Freeze streak <span className="freeze-count">({freezesAvailable} left this week)</span>
+                🧊 Zmraziť sériu <span className="freeze-count">({freezesAvailable} zostatok tento týždeň)</span>
               </button>
             )}
 
@@ -135,7 +135,7 @@ export default function Dashboard({ state, todayStatus, onStartTask, onOpenSetti
                   onClick={handleShare}
                   style={{ background: 'none', border: 'none', color: 'var(--muted)', fontSize: 13, cursor: 'pointer', textDecoration: 'underline', padding: 0 }}
                 >
-                  {shareMsg || '📤 Share my streak'}
+                  {shareMsg || '📤 Zdieľať moju sériu'}
                 </button>
               </div>
             )}
@@ -143,7 +143,7 @@ export default function Dashboard({ state, todayStatus, onStartTask, onOpenSetti
             {nextMilestone && (
               <div className="milestone-progress">
                 <div className="milestone-progress-label">
-                  Next: {nextMilestone.emoji} {nextMilestone.label} ({nextMilestone.days} days)
+                  Ďalší: {nextMilestone.emoji} {nextMilestone.label} ({nextMilestone.days} dní)
                 </div>
                 <div className="progress-bar">
                   <div
@@ -165,29 +165,29 @@ export default function Dashboard({ state, todayStatus, onStartTask, onOpenSetti
               <div className="progress-bar">
                 <div className="progress-fill progress-xp" style={{ width: `${progress}%` }} />
               </div>
-              <div className="xp-label">{xp - currentFloor} / {nextXp - currentFloor} to level {level + 1}</div>
+              <div className="xp-label">{xp - currentFloor} / {nextXp - currentFloor} do úrovne {level + 1}</div>
             </div>
           </div>
 
           <div className="stats-row">
             <div className="stat-box">
               <div className="stat-number">{totalDays}</div>
-              <div className="stat-label">Days completed</div>
+              <div className="stat-label">Dokončené dni</div>
             </div>
             <div className="stat-box">
               <div className="stat-number">{unlockedMilestones.length}</div>
-              <div className="stat-label">Milestones</div>
+              <div className="stat-label">Míľniky</div>
             </div>
             <div className="stat-box">
               <div className="stat-number">{formatDuration(duration)}</div>
-              <div className="stat-label">Session length</div>
+              <div className="stat-label">Dĺžka session</div>
             </div>
           </div>
 
           <ActivityGraph history={state.history || []} />
 
           <div className="milestones-section">
-            <h3>Milestones</h3>
+            <h3>Míľniky</h3>
             <div className="milestones-grid">
               {MILESTONES.map(m => {
                 const unlocked = unlockedMilestones.includes(m.days)
@@ -208,20 +208,20 @@ export default function Dashboard({ state, todayStatus, onStartTask, onOpenSetti
         {/* Right column: today's tasks & bonus */}
         <div className="dash-right">
           <div className="today-section">
-            <h3>Reto de hoy <span className="duration-badge">{formatDuration(duration)} cada uno</span></h3>
+            <h3>Dnešná výzva <span className="duration-badge">{formatDuration(duration)} každé</span></h3>
             <div className="tasks-grid">
               <TaskCard
                 icon="✍️"
-                title="Writing"
-                desc="Escribe en español sobre el tema del día"
+                title="Písanie"
+                desc="Napíš niekoľko viet po španielsky na tému dňa"
                 done={todayStatus.writingDone}
                 color="purple"
                 onStart={() => onStartTask('writing')}
               />
               <TaskCard
                 icon="🎤"
-                title="Speaking"
-                desc="Speak out loud about the prompt of the day"
+                title="Rozprávanie"
+                desc="Povedz svoju odpoveď nahlas po španielsky"
                 done={todayStatus.speakingDone}
                 color="green"
                 onStart={() => onStartTask('speaking')}
@@ -230,11 +230,11 @@ export default function Dashboard({ state, todayStatus, onStartTask, onOpenSetti
 
             {todayStatus.writingDone && todayStatus.speakingDone ? (
               <div className="all-done-banner">
-                🎉 Both tasks done for today! See you tomorrow!
+                🎉 Obe úlohy hotové! Uvidíme sa zajtra!
               </div>
             ) : (todayStatus.writingDone || todayStatus.speakingDone) ? (
               <div className="streak-done-banner">
-                🔥 Streak secured! Complete the other task for extra XP.
+                🔥 Séria zachránená! Dokonči druhú úlohu pre extra XP.
               </div>
             ) : null}
           </div>
@@ -243,15 +243,15 @@ export default function Dashboard({ state, todayStatus, onStartTask, onOpenSetti
             <div className="weekly-top">
               <span className="weekly-icon">🏆</span>
               <div>
-                <div className="weekly-label">Weekly Challenge</div>
+                <div className="weekly-label">Týždenná výzva</div>
                 <div className="weekly-title">{weeklyChallenge.title}</div>
               </div>
-              {weeklyDone && <div className="weekly-badge">Done!</div>}
+              {weeklyDone && <div className="weekly-badge">Hotovo!</div>}
             </div>
             <p className="weekly-prompt">{weeklyChallenge.prompt}</p>
             {!weeklyDone && (
               <button className="btn-weekly-start" onClick={() => onStartTask('weekly')}>
-                Start Challenge +50 XP
+                Začať výzvu +50 XP
               </button>
             )}
           </div>
@@ -286,7 +286,7 @@ export default function Dashboard({ state, todayStatus, onStartTask, onOpenSetti
               onClick={handleSaveWotd}
               disabled={wotdSaved}
             >
-              {wotdSaved ? '✓ Saved to vocabulary' : '+ Save to vocabulary'}
+              {wotdSaved ? '✓ Uložené do slovníčka' : '+ Uložiť do slovníčka'}
             </button>
           </div>
 
@@ -309,70 +309,70 @@ export default function Dashboard({ state, todayStatus, onStartTask, onOpenSetti
           </div>
 
           <div className="bonus-section">
-            <h3>Extra Practice</h3>
-            <p className="bonus-note">Optional — not required for streak</p>
+            <h3>Extra cvičenia</h3>
+            <p className="bonus-note">Voliteľné — nie sú potrebné pre sériu</p>
             <button className="btn-mixed" onClick={() => onStartTask('mixed')}>
-              🔀 Mixed Practice
-              <span className="btn-mixed-sub">5 skills in one session — with sentence practice</span>
+              🔀 Zmiešané cvičenie
+              <span className="btn-mixed-sub">5 rôznych zručností v jednej session</span>
             </button>
             <button className="btn-vocab" onClick={() => onStartTask('reading')}>
-              📖 Reading
-              <span className="btn-vocab-sub">Read short texts and answer comprehension questions</span>
+              📖 Čítanie
+              <span className="btn-vocab-sub">Prečítaj krátky text a odpovedz na otázky</span>
             </button>
             <button className="btn-vocab" onClick={() => onStartTask('vocabpacks')} style={{ background: 'linear-gradient(135deg, #f59e0b, #ef4444)' }}>
-              📦 Vocabulary Packs
+              📦 Tematické balíčky
               <span className="btn-vocab-sub">Tematické slovíčka: reštaurácia, rodina, čas...</span>
             </button>
             <button className="btn-vocab" onClick={() => onStartTask('vocabulary')} style={{ background: 'linear-gradient(135deg, #10b981, #3b82f6)' }}>
               <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                📗 My Vocabulary
+                📗 Môj slovníček
                 {vocabDueCount > 0 && (
                   <span style={{ background: '#fef3c7', color: '#92400e', borderRadius: 10, padding: '1px 8px', fontSize: 12, fontWeight: 700 }}>
-                    {vocabDueCount} due
+                    {vocabDueCount} na opakovanie
                   </span>
                 )}
               </span>
-              <span className="btn-vocab-sub">Words you saved from exercises and chat</span>
+              <span className="btn-vocab-sub">Slovíčka uložené z cvičení a chatu</span>
             </button>
             <div className="tasks-grid">
               <BonusCard
-                icon="🔤" title="Synonyms"
-                desc="Find synonyms for today's word"
+                icon="🔤" title="Synonymá"
+                desc="Nájdi synonymá k španielskemu slovu"
                 color="blue" onStart={() => onStartTask('synonyms')}
               />
               <BonusCard
-                icon="📝" title="Prepositions"
-                desc="Fill in the missing preposition"
+                icon="📝" title="Predložky"
+                desc="Doplň správnu predložku do vety"
                 color="orange" onStart={() => onStartTask('prepositions')}
               />
               <BonusCard
-                icon="💬" title="Idioms"
-                desc="Fill in the missing word in an idiom"
+                icon="💬" title="Idiomy"
+                desc="Doplň chýbajúce slovo do idiomatického výrazu"
                 color="purple" onStart={() => onStartTask('idioms')}
               />
               <BonusCard
                 icon="🎧" title="Shadowing"
-                desc="Listen and repeat a sentence"
+                desc="Počúvaj vetu a zopakuj ju nahlas"
                 color="teal" onStart={() => onStartTask('shadowing')}
               />
               <BonusCard
-                icon="📚" title="Grammar"
-                desc="Fill in the blank — tenses, articles, conditionals and more"
+                icon="📚" title="Gramatika"
+                desc="Doplň správny tvar — slovesá, časy, rod"
                 color="green" onStart={() => onStartTask('grammar')}
               />
               <BonusCard
-                icon="📋" title="Grammar Cards"
-                desc="Key A1/A2 rules explained with examples — tap to explore"
+                icon="📋" title="Gramatické karty"
+                desc="Pravidlá A1/A2 s príkladmi — klepni a preskúmaj"
                 color="green" onStart={() => onStartTask('grammarcards')}
               />
               <BonusCard
                 icon="🔁" title="Prelož vetu"
-                desc="Translate Slovak sentences into Spanish"
+                desc="Preložte slovenské vety do španielčiny"
                 color="purple" onStart={() => onStartTask('translation')}
               />
               <BonusCard
                 icon="🗣️" title="Dialóg"
-                desc="Scripted conversations — café, doctor, hotel..."
+                desc="Nacvič rozhovor — kaviareň, lekár, hotel..."
                 color="blue" onStart={() => onStartTask('dialog')}
               />
               <BonusCard
@@ -381,48 +381,48 @@ export default function Dashboard({ state, todayStatus, onStartTask, onOpenSetti
                 color="teal" onStart={() => onStartTask('numbers')}
               />
               <BonusCard
-                icon="🔀" title="Reorder"
-                desc="Arrange words into a correct sentence"
+                icon="🔀" title="Zoradenie vety"
+                desc="Poskladaj slová do správnej španielskej vety"
                 color="orange" onStart={() => onStartTask('reorder')}
               />
               <BonusCard
-                icon="🎧" title="Listening"
-                desc="Hear a sentence and fill in the missing word"
+                icon="🎧" title="Počúvanie"
+                desc="Počúvaj vetu a doplň chýbajúce slovo"
                 color="teal" onStart={() => onStartTask('listening')}
               />
               <BonusCard
-                icon="🃏" title="Vocab Quiz"
-                desc="Test yourself on your saved vocabulary"
+                icon="🃏" title="Kvíz slovíčok"
+                desc="Otestuj sa na uložených slovíčkach"
                 color="blue" onStart={() => onStartTask('vocabquiz')}
               />
               <BonusCard
-                icon="📊" title="Weak Spots"
-                desc="See your most common error patterns"
+                icon="📊" title="Slabé miesta"
+                desc="Pozri svoje najčastejšie chyby"
                 color="purple" onStart={() => onStartTask('weakspots')}
               />
               <BonusCard
-                icon="🔧" title="Error Correction"
-                desc="Find and fix the grammar mistake in each sentence"
+                icon="🔧" title="Oprav chybu"
+                desc="Nájdi a oprav gramatickú chybu vo vete"
                 color="orange" onStart={() => onStartTask('errorcorrection')}
               />
               <BonusCard
-                icon="🔗" title="Collocations"
-                desc="¿Qué palabras van juntas? hacer/tener, mucho/muy y más"
+                icon="🔗" title="Kolokácie"
+                desc="Ktoré slová patria k sebe? hacer/tener, mucho/muy..."
                 color="blue" onStart={() => onStartTask('collocations')}
               />
               <BonusCard
-                icon="🌿" title="Word Families"
-                desc="Complete the sentence with the correct word form"
+                icon="🌿" title="Slovné rodiny"
+                desc="Doplň správny tvar slova do vety"
                 color="green" onStart={() => onStartTask('wordfamilies')}
               />
               <BonusCard
-                icon="💫" title="Phrasal Verbs"
-                desc="Verbos reflexivos: levantarse, llamarse, acostarse..."
+                icon="💫" title="Zvratné slovesá"
+                desc="levantarse, llamarse, acostarse — precvič zvratné slovesá"
                 color="teal" onStart={() => onStartTask('phrasalverbs')}
               />
               <BonusCard
-                icon="🎙️" title="Dictation"
-                desc="Hear a full sentence and type every word you heard"
+                icon="🎙️" title="Diktát"
+                desc="Počúvaj celú vetu a napíš každé slovo"
                 color="teal" onStart={() => onStartTask('dictation')}
               />
             </div>
@@ -451,7 +451,7 @@ function ActivityGraph({ history }) {
 
   return (
     <div className="activity-graph">
-      <div className="activity-label">Last 30 days</div>
+      <div className="activity-label">Posledných 30 dní</div>
       <div className="activity-grid">
         {cells.map(({ dateStr, cls, day }) => (
           <div key={dateStr} className={`act-dot ${cls}`} title={dateStr}>
@@ -460,9 +460,9 @@ function ActivityGraph({ history }) {
         ))}
       </div>
       <div className="calendar-legend">
-        <span className="cal-legend-dot" style={{ background: 'var(--green)' }} />both
-        <span className="cal-legend-dot" style={{ background: 'var(--green-light)', border: '1px solid var(--green)' }} />one
-        <span className="cal-legend-dot" style={{ background: 'var(--border)' }} />none
+        <span className="cal-legend-dot" style={{ background: 'var(--green)' }} />obe
+        <span className="cal-legend-dot" style={{ background: 'var(--green-light)', border: '1px solid var(--green)' }} />jedna
+        <span className="cal-legend-dot" style={{ background: 'var(--border)' }} />žiadna
       </div>
     </div>
   )
@@ -476,7 +476,7 @@ function BonusCard({ icon, title, desc, color, onStart }) {
         <div className="task-card-title">{title}</div>
         <div className="task-card-desc">{desc}</div>
       </div>
-      <button className={`btn-task btn-task-${color}`} onClick={onStart}>Start</button>
+      <button className={`btn-task btn-task-${color}`} onClick={onStart}>Začať</button>
     </div>
   )
 }
@@ -490,8 +490,8 @@ function TaskCard({ icon, title, desc, done, color, onStart }) {
         <div className="task-card-desc">{desc}</div>
       </div>
       {done
-        ? <div className="task-card-complete">Done!</div>
-        : <button className={`btn-task btn-task-${color}`} onClick={onStart}>Start</button>
+        ? <div className="task-card-complete">Hotovo!</div>
+        : <button className={`btn-task btn-task-${color}`} onClick={onStart}>Začať</button>
       }
     </div>
   )
