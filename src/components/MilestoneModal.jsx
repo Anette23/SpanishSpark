@@ -17,9 +17,9 @@ export default function MilestoneModal({ milestone, onClose }) {
     <div className="modal-overlay" onClick={onClose}>
       <div className="milestone-modal" onClick={e => e.stopPropagation()}>
         <div className="milestone-emoji">{milestone.emoji}</div>
-        <div className="milestone-badge">MILESTONE UNLOCKED</div>
+        <div className="milestone-badge">MÍĽNIK ODOMKNUTÝ</div>
         <h2 className="milestone-name">{milestone.label}</h2>
-        <p className="milestone-days">{milestone.days}-day streak!</p>
+        <p className="milestone-days">{milestone.days}-dňová séria!</p>
         <div className="milestone-xp">+{milestone.xp} XP</div>
         <div className="confetti">
           {Array.from({ length: 20 }).map((_, i) => (
@@ -30,7 +30,7 @@ export default function MilestoneModal({ milestone, onClose }) {
             }} />
           ))}
         </div>
-        <button className="btn-primary" onClick={onClose}>Awesome! 🎉</button>
+        <button className="btn-primary" onClick={onClose}>Úžasné! 🎉</button>
       </div>
     </div>
   )

@@ -39,14 +39,14 @@ export default function Settings({ onBack }) {
         if (data.state) {
           localStorage.setItem('english_habit_v1', JSON.stringify(data.state))
           if (data.synPerf) localStorage.setItem('syn_perf', JSON.stringify(data.synPerf))
-          setImportStatus('✓ Data restored! Reloading...')
+          setImportStatus('✓ Dáta obnovené! Načítavam...')
           setTimeout(() => window.location.reload(), 1200)
         } else {
-          setImportStatus('Invalid backup file.')
+          setImportStatus('Neplatný záložný súbor.')
           setTimeout(() => setImportStatus(''), 3000)
         }
       } catch {
-        setImportStatus('Could not read file.')
+        setImportStatus('Súbor sa nepodarilo prečítať.')
         setTimeout(() => setImportStatus(''), 3000)
       }
     }
@@ -62,14 +62,14 @@ export default function Settings({ onBack }) {
 
   async function handleNotifToggle() {
     if (!notif.enabled) {
-      if (!('Notification' in window)) { setNotifStatus('Notifications not supported in this browser.'); return }
+      if (!('Notification' in window)) { setNotifStatus('Notifikácie nie sú v tomto prehliadači podporované.'); return }
       const perm = await Notification.requestPermission()
-      if (perm !== 'granted') { setNotifStatus('Permission denied. Allow notifications in browser settings.'); return }
+      if (perm !== 'granted') { setNotifStatus('Prístup zamietnutý. Povoľ notifikácie v nastaveniach prehliadača.'); return }
     }
     const next = { ...notif, enabled: !notif.enabled }
     setNotif(next)
     saveNotifSettings(next)
-    setNotifStatus(next.enabled ? 'Reminders enabled!' : 'Reminders disabled.')
+    setNotifStatus(next.enabled ? 'Pripomienky zapnuté!' : 'Pripomienky vypnuté.')
     setTimeout(() => setNotifStatus(''), 3000)
   }
 
@@ -81,26 +81,26 @@ export default function Settings({ onBack }) {
 
   return (
     <div className="task-session">
-      <button className="btn-back" onClick={onBack}>← Back</button>
+      <button className="btn-back" onClick={onBack}>← Späť</button>
       <div className="task-header accent-purple">
         <span className="task-icon">⚙️</span>
         <div>
-          <h2>Settings</h2>
-          <p className="task-subtitle">Data & configuration</p>
+          <h2>Nastavenia</h2>
+          <p className="task-subtitle">Dáta a konfigurácia</p>
         </div>
       </div>
 
       <div className="prompt-box">
-        <div className="prompt-label">Your data</div>
+        <div className="prompt-label">Tvoje dáta</div>
         <p style={{ fontSize: '14px', lineHeight: '1.6', color: 'var(--text)', marginBottom: '12px' }}>
-          All your progress is stored locally in this browser. Export a backup at any time.
+          Všetok tvoj pokrok je uložený lokálne v tomto prehliadači. Kedykoľvek si môžeš exportovať zálohu.
         </p>
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
           <button className="btn-primary" onClick={handleExport} style={{ flex: 1 }}>
-            {exportDone ? '✓ Downloaded!' : '📥 Export data (JSON)'}
+            {exportDone ? '✓ Stiahnuté!' : '📥 Exportovať dáta (JSON)'}
           </button>
           <button className="btn-secondary" onClick={() => importRef.current?.click()} style={{ flex: 1 }}>
-            📤 Import backup
+            📤 Importovať zálohu
           </button>
           <input ref={importRef} type="file" accept=".json" style={{ display: 'none' }} onChange={handleImport} />
         </div>
@@ -108,38 +108,38 @@ export default function Settings({ onBack }) {
       </div>
 
       <div className="prompt-box">
-        <div className="prompt-label">How AI feedback works</div>
+        <div className="prompt-label">Ako funguje AI spätná väzba</div>
         <p style={{ fontSize: '14px', lineHeight: '1.6', color: 'var(--text)' }}>
-          AI feedback runs securely on the server — your API key is never stored in the browser.
-          To enable it, add your Anthropic API key as an environment variable in your Vercel project.
+          AI spätná väzba beží bezpečne na serveri — tvoj API kľúč sa nikdy neukladá v prehliadači.
+          Pre aktiváciu pridaj svoj Anthropic API kľúč ako premennú prostredia vo Vercel projekte.
         </p>
       </div>
 
       <div className="prompt-box">
-        <div className="prompt-label">Setup steps</div>
+        <div className="prompt-label">Kroky nastavenia</div>
         <ol className="settings-steps">
-          <li>Go to <strong>vercel.com</strong> → your project → <strong>Settings → Environment Variables</strong></li>
-          <li>Add variable: <strong>ANTHROPIC_API_KEY</strong> = your key</li>
-          <li>Get a key at <strong>console.anthropic.com</strong> → API Keys</li>
-          <li>Redeploy the project</li>
+          <li>Choď na <strong>vercel.com</strong> → tvoj projekt → <strong>Settings → Environment Variables</strong></li>
+          <li>Pridaj premennú: <strong>ANTHROPIC_API_KEY</strong> = tvoj kľúč</li>
+          <li>Získaj kľúč na <strong>console.anthropic.com</strong> → API Keys</li>
+          <li>Znovu nasaď projekt</li>
         </ol>
       </div>
 
       <div className="prompt-box">
-        <div className="prompt-label">Daily reminder</div>
+        <div className="prompt-label">Denná pripomienka</div>
         <p style={{ fontSize: 14, lineHeight: 1.6, color: 'var(--text)', marginBottom: 12 }}>
-          Get a browser notification each day to remind you to practice.
+          Dostávaj každý deň upozornenie v prehliadači, aby si si pripomenula cvičenie.
         </p>
         <div className="notif-row">
           <button
             className={`notif-toggle ${notif.enabled ? 'notif-toggle-on' : ''}`}
             onClick={handleNotifToggle}
           >
-            {notif.enabled ? '🔔 Enabled' : '🔕 Disabled'}
+            {notif.enabled ? '🔔 Zapnuté' : '🔕 Vypnuté'}
           </button>
           {notif.enabled && (
             <div className="notif-hour-row">
-              <label style={{ fontSize: 14, color: 'var(--text)' }}>Remind me at</label>
+              <label style={{ fontSize: 14, color: 'var(--text)' }}>Pripomenúť o</label>
               <select
                 className="notif-hour-select"
                 value={notif.hour}
@@ -156,24 +156,24 @@ export default function Settings({ onBack }) {
         </div>
         {notifStatus && <p style={{ fontSize: 13, color: 'var(--green)', marginTop: 8, fontWeight: 600 }}>{notifStatus}</p>}
         <p style={{ fontSize: 12, color: 'var(--muted)', marginTop: 8 }}>
-          Note: Notifications only work when the app is open in the browser. For reliable reminders, use the PWA installed on your home screen.
+          Poznámka: Notifikácie fungujú len keď je aplikácia otvorená v prehliadači. Pre spoľahlivé pripomienky použi PWA nainštalovanú na domovskej obrazovke.
         </p>
       </div>
 
       <div className="prompt-box">
-        <div className="prompt-label" style={{ color: 'var(--danger, #e53e3e)' }}>Danger zone</div>
+        <div className="prompt-label" style={{ color: 'var(--danger, #e53e3e)' }}>Nebezpečná zóna</div>
         {!resetConfirm ? (
           <button className="btn-danger" onClick={() => setResetConfirm(true)}>
-            Reset all progress
+            Resetovať všetok pokrok
           </button>
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
             <p style={{ fontSize: '14px', color: 'var(--danger, #e53e3e)', margin: 0 }}>
-              This will delete all your streaks, XP, and history. This cannot be undone.
+              Tým sa vymažú všetky tvoje série, XP a história. Toto nie je možné vrátiť späť.
             </p>
             <div style={{ display: 'flex', gap: '8px' }}>
-              <button className="btn-danger" onClick={handleReset}>Yes, reset everything</button>
-              <button className="btn-secondary" onClick={() => setResetConfirm(false)}>Cancel</button>
+              <button className="btn-danger" onClick={handleReset}>Áno, resetovať všetko</button>
+              <button className="btn-secondary" onClick={() => setResetConfirm(false)}>Zrušiť</button>
             </div>
           </div>
         )}

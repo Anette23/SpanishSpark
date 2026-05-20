@@ -31,9 +31,7 @@ export default function TaskSession({ taskType, duration, onComplete, onBack }) 
     const date = todayStr()
     setSubmitted(true)
     onComplete()
-    // Save text immediately so data isn't lost if the browser closes before feedback arrives
     saveTaskResult(date, taskType, { text: feedbackText, feedback: null, prompt })
-    // Save context so ChatSession can follow up on today's topic
     if (feedbackText.trim()) saveDailySession({ taskType, prompt, text: feedbackText })
 
     if (!feedbackText.trim()) return
@@ -54,11 +52,11 @@ export default function TaskSession({ taskType, duration, onComplete, onBack }) 
       }
     } catch (e) {
       if (e.message === 'NOT_CONFIGURED') {
-        setFeedbackError('AI feedback is not set up yet. See ⚙️ Settings for instructions.')
+        setFeedbackError('AI spätná väzba ešte nie je nastavená. Pozri ⚙️ Nastavenia.')
       } else if (e.message === 'UNAUTHORIZED') {
-        setFeedbackError('Feedback token mismatch. Try redeploying the app.')
+        setFeedbackError('Chyba tokenu. Skús znovu nasadiť aplikáciu.')
       } else {
-        setFeedbackError('Could not load feedback. Try again later.')
+        setFeedbackError('Spätnú väzbu sa nepodarilo načítať. Skúste to neskôr.')
       }
     } finally {
       setFeedbackLoading(false)
@@ -69,20 +67,20 @@ export default function TaskSession({ taskType, duration, onComplete, onBack }) 
   if (submitted) {
     return (
       <div className="task-session">
-        <button className="btn-back" onClick={onBack}>← Back</button>
+        <button className="btn-back" onClick={onBack}>← Späť</button>
         <div className="session-complete-inline">
           <div className="complete-icon">⭐</div>
-          <h2>Amazing work!</h2>
-          <p className="xp-gain">+25 XP earned</p>
+          <h2>Skvelá práca!</h2>
+          <p className="xp-gain">+25 XP získaných</p>
         </div>
 
         {feedbackText.trim()
           ? <FeedbackView feedback={feedback} loading={feedbackLoading} error={feedbackError} />
-          : <div className="feedback-box feedback-hint">💡 Next time write or record something to get AI feedback.</div>
+          : <div className="feedback-box feedback-hint">💡 Nabudúce napíš alebo nahraj niečo, aby si dostala AI spätnú väzbu.</div>
         }
 
         {!feedbackLoading && (
-          <button className="btn-primary" onClick={onBack}>Back to Dashboard</button>
+          <button className="btn-primary" onClick={onBack}>Späť na dashboard</button>
         )}
       </div>
     )
@@ -90,22 +88,22 @@ export default function TaskSession({ taskType, duration, onComplete, onBack }) 
 
   return (
     <div className="task-session">
-      <button className="btn-back" onClick={onBack}>← Back</button>
+      <button className="btn-back" onClick={onBack}>← Späť</button>
 
       <div className={`task-header ${accentColor}`}>
         <span className="task-icon">{isWriting ? '✍️' : '🎤'}</span>
         <div>
-          <h2>{isWriting ? 'Writing' : 'Speaking'} Session</h2>
-          <p className="task-subtitle">{formatDuration(duration)} challenge</p>
+          <h2>{isWriting ? 'Písanie' : 'Rozprávanie'}</h2>
+          <p className="task-subtitle">{formatDuration(duration)} výzva</p>
         </div>
       </div>
 
       <div className="prompt-box">
-        <div className="prompt-label">Today's prompt</div>
+        <div className="prompt-label">Dnešná téma</div>
         <p className="prompt-text">"{prompt}"</p>
         {adaptiveResult.targetedAt && (
           <div style={{ fontSize: 12, color: '#065f46', background: '#d1fae5', borderRadius: 6, padding: '3px 10px', width: 'fit-content', marginTop: 6 }}>
-            🎯 Chosen to practise {adaptiveResult.targetedAt}
+            🎯 Zvolené na precvičenie {adaptiveResult.targetedAt}
           </div>
         )}
       </div>
@@ -119,7 +117,7 @@ export default function TaskSession({ taskType, duration, onComplete, onBack }) 
       {isWriting && (
         <div className="writing-area">
           <textarea
-            placeholder="Start writing here... don't worry about mistakes, just write!"
+            placeholder="Začni písať... nerob si starosti s chybami, len píš!"
             value={text}
             onChange={e => setText(e.target.value)}
             className="text-input"
@@ -134,7 +132,7 @@ export default function TaskSession({ taskType, duration, onComplete, onBack }) 
         <>
           <div className="speaking-hint">
             <p>🎤 Habla en español sobre el tema de arriba.</p>
-            <p>Use the recorder below for automatic transcription, or write your answer manually.</p>
+            <p>Použi rekordér nižšie na automatický prepis alebo napíš svoju odpoveď ručne.</p>
           </div>
 
           <SpeechRecorder
@@ -144,10 +142,10 @@ export default function TaskSession({ taskType, duration, onComplete, onBack }) 
 
           <div className="writing-area">
             <label className="input-label">
-              Your answer <span className="optional">— edit transcript or write manually</span>
+              Tvoja odpoveď <span className="optional">— uprav prepis alebo napíš ručne</span>
             </label>
             <textarea
-              placeholder="Transcript appears here automatically, or write it yourself..."
+              placeholder="Prepis sa zobrazí tu automaticky, alebo ho napíš sama..."
               value={speakingNotes}
               onChange={e => setSpeakingNotes(e.target.value)}
               className="text-input"
@@ -164,13 +162,13 @@ export default function TaskSession({ taskType, duration, onComplete, onBack }) 
           className="btn-primary btn-done"
           onClick={handleSubmit}
           disabled={isWriting && text.trim().length < 10}
-          title={isWriting && text.trim().length < 10 ? 'Write at least a few words first' : ''}
+          title={isWriting && text.trim().length < 10 ? 'Najprv napíš aspoň pár slov' : ''}
         >
-          {feedbackText.trim() ? 'Submit & Get Feedback ✓' : 'Mark as Done ✓'}
+          {feedbackText.trim() ? 'Odoslať a dostať spätnú väzbu ✓' : 'Označiť ako hotové ✓'}
         </button>
       )}
       {timerDone && isWriting && text.trim().length < 10 && (
-        <p className="submit-hint">✏️ Write at least a few words to submit.</p>
+        <p className="submit-hint">✏️ Napíš aspoň pár slov pre odoslanie.</p>
       )}
     </div>
   )

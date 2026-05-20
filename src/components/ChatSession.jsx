@@ -17,7 +17,7 @@ function useVoiceInput(onResult) {
     if (!SR) return
     setSupported(true)
     const rec = new SR()
-    rec.continuous     = false  // avoids Chrome Android repeating words across audio chunks
+    rec.continuous     = false
     rec.interimResults = true
     rec.lang = 'es-ES'
 
@@ -33,7 +33,7 @@ function useVoiceInput(onResult) {
 
     rec.onend = () => {
       if (shouldRecordRef.current) {
-        try { rec.start() } catch {}   // restart after each utterance pause
+        try { rec.start() } catch {}
       } else {
         setIsRecording(false)
       }
@@ -120,11 +120,11 @@ export default function ChatSession({ onBack }) {
       setMessages(prev => [...prev, { role: 'assistant', content: reply }])
     } catch (e) {
       if (e.message === 'NOT_CONFIGURED') {
-        setError('AI is not set up yet. See ⚙️ Settings.')
+        setError('AI ešte nie je nastavená. Pozri ⚙️ Nastavenia.')
       } else if (e.message === 'UNAUTHORIZED') {
-        setError('Token error. Try redeploying the app.')
+        setError('Chyba tokenu. Skús znovu nasadiť aplikáciu.')
       } else {
-        setError('Could not reach AI. Check your connection.')
+        setError('Nedá sa spojiť s AI. Skontroluj pripojenie.')
       }
     } finally {
       setLoading(false)
@@ -148,13 +148,13 @@ export default function ChatSession({ onBack }) {
   return (
     <div className="chat-session">
       <div className="chat-topbar">
-        <button className="btn-back" onClick={onBack}>← Back</button>
+        <button className="btn-back" onClick={onBack}>← Späť</button>
         <div className="chat-title">
           <span>💬</span> Chat en español
         </div>
         {canGetFeedback && !showFeedback && (
           <button className="btn-feedback-chat" onClick={handleFeedback}>
-            Get feedback
+            Späť. väzba
           </button>
         )}
       </div>
@@ -169,7 +169,7 @@ export default function ChatSession({ onBack }) {
       )}
       {!todayCtx && practicedPhrases.length > 0 && (
         <div className="chat-phrases-bar">
-          <span className="chat-phrases-label">Practicing:</span>
+          <span className="chat-phrases-label">Precvičuješ:</span>
           {practicedPhrases.slice(0, 4).map(p => (
             <span key={p} className="chat-phrase-chip">{p}</span>
           ))}
@@ -197,7 +197,7 @@ export default function ChatSession({ onBack }) {
 
         {showFeedback && (
           <div className="chat-feedback-section">
-            <div className="chat-feedback-label">📝 Conversation Feedback</div>
+            <div className="chat-feedback-label">📝 Spätná väzba na konverzáciu</div>
             <FeedbackView feedback={feedback} loading={feedbackLoading} error={null} />
           </div>
         )}
@@ -229,7 +229,7 @@ export default function ChatSession({ onBack }) {
               onClick={toggleVoice}
               disabled={loading}
               type="button"
-              title={isRecording ? 'Stop recording' : 'Speak'}
+              title={isRecording ? 'Zastaviť nahrávanie' : 'Hovoriť'}
             >
               🎙
             </button>
@@ -247,12 +247,12 @@ export default function ChatSession({ onBack }) {
 
       {showFeedback && !feedbackLoading && (
         <button className="btn-primary" style={{ margin: '0 16px 24px' }} onClick={onBack}>
-          Back to Dashboard
+          Späť na dashboard
         </button>
       )}
 
       {!showFeedback && canGetFeedback && (
-        <p className="chat-hint">Tip: Send a few more messages, then tap "Get feedback" to see corrections.</p>
+        <p className="chat-hint">Tip: Pošli ešte pár správ a potom klepni na "Späť. väzba" pre zobrazenie opráv.</p>
       )}
     </div>
   )

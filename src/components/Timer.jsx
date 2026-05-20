@@ -61,10 +61,10 @@ export default function Timer({ duration, onComplete, taskType }) {
           className={`btn-start ${running ? 'btn-pause' : ''}`}
           onClick={() => setRunning(r => !r)}
         >
-          {running ? '⏸ Pause' : timeLeft === duration ? '▶ Start' : '▶ Resume'}
+          {running ? '⏸ Pauza' : timeLeft === duration ? '▶ Štart' : '▶ Pokračovať'}
         </button>
       )}
-      {done && <p className="timer-complete-msg">Time's up! Great job! 🎉</p>}
+      {done && <p className="timer-complete-msg">Čas vypršal! Skvelá práca! 🎉</p>}
     </div>
   )
 }

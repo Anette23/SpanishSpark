@@ -56,13 +56,13 @@ export default function Dashboard({ state, todayStatus, onStartTask, onOpenSetti
 
   // Recommended exercise of the day — rotates daily through beginner-friendly picks
   const DAILY_RECS = [
-    { view: 'grammarcards', icon: '📋', title: 'Grammar Cards', desc: 'Review A1 grammar rules — great for beginners!' },
-    { view: 'translation',  icon: '🔁', title: 'Prelož vetu',   desc: 'Translate Slovak sentences into Spanish.' },
-    { view: 'numbers',      icon: '🔢', title: 'Čísla a čas',   desc: 'Practice numbers, clock times and days.' },
-    { view: 'grammar',      icon: '📚', title: 'Grammar Fill',  desc: 'Fill in the blank — verbs and key structures.' },
-    { view: 'dialog',       icon: '🗣️', title: 'Dialóg',        desc: 'Practice a scripted real-life conversation.' },
-    { view: 'reading',      icon: '📖', title: 'Reading',       desc: 'Read a short text and answer questions.' },
-    { view: 'errorcorrection', icon: '🔧', title: 'Error Correction', desc: 'Spot the grammar mistake in each sentence.' },
+    { view: 'grammarcards',   icon: '📋', title: 'Gramatické karty',     desc: 'Precvič si pravidlá gramatiky A1 — ideálne pre začiatočníkov!' },
+    { view: 'translation',    icon: '🔁', title: 'Prelož vetu',           desc: 'Prekladaj slovenské vety do španielčiny.' },
+    { view: 'numbers',        icon: '🔢', title: 'Čísla a čas',           desc: 'Precvič čísla, hodiny, dni a mesiace.' },
+    { view: 'grammar',        icon: '📚', title: 'Gramatika — dopĺňanie', desc: 'Doplň správne slovo — slovesá a kľúčové štruktúry.' },
+    { view: 'dialog',         icon: '🗣️', title: 'Dialóg',                desc: 'Nacvič rozhovor zo skutočného života.' },
+    { view: 'reading',        icon: '📖', title: 'Čítanie',               desc: 'Prečítaj krátky text a odpovedz na otázky.' },
+    { view: 'errorcorrection',icon: '🔧', title: 'Oprav chybu',           desc: 'Nájdi gramatickú chybu v každej vete.' },
   ]
   const dayOfYear = Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0)) / 86400000)
   const todayRec = DAILY_RECS[dayOfYear % DAILY_RECS.length]
@@ -81,13 +81,13 @@ export default function Dashboard({ state, todayStatus, onStartTask, onOpenSetti
       <div className="dash-header">
         <div>
           <h1>SpanishSpark <span className="spark">⚡</span></h1>
-          <p className="dash-subtitle">2-minute daily Spanish practice</p>
+          <p className="dash-subtitle">2 minúty dennej španielčiny</p>
         </div>
         <div className="dash-header-actions">
-          <button className="btn-settings" onClick={onToggleDark} title="Toggle dark mode">{darkMode ? '☀️' : '🌙'}</button>
-          <button className="btn-settings" onClick={onOpenHistory} title="History">📚</button>
-          <button className="btn-settings" onClick={onOpenStats} title="Stats">📊</button>
-          <button className="btn-settings" onClick={onOpenSettings} title="Settings">⚙️</button>
+          <button className="btn-settings" onClick={onToggleDark} title="Prepnúť tmavý režim">{darkMode ? '☀️' : '🌙'}</button>
+          <button className="btn-settings" onClick={onOpenHistory} title="História">📚</button>
+          <button className="btn-settings" onClick={onOpenStats} title="Štatistiky">📊</button>
+          <button className="btn-settings" onClick={onOpenSettings} title="Nastavenia">⚙️</button>
         </div>
       </div>
 
@@ -273,7 +273,7 @@ export default function Dashboard({ state, todayStatus, onStartTask, onOpenSetti
                 onClick={speakWord}
                 disabled={wotdSpeaking || !('speechSynthesis' in window)}
                 style={{ background: 'rgba(255,255,255,0.2)', border: 'none', borderRadius: 8, padding: '4px 10px', cursor: 'pointer', fontSize: 16, color: '#fff', flexShrink: 0 }}
-                title="Hear pronunciation"
+                title="Vypočuť výslovnosť"
               >
                 {wotdSpeaking ? '🔊' : '▶'}
               </button>
@@ -530,7 +530,7 @@ function SkillsProgress() {
                 <span style={{ color: 'var(--text)' }}>{r.icon} {r.label}</span>
                 <span style={{ color: 'var(--muted)', fontSize: 12 }}>
                   {r.learned}/{r.total}
-                  {r.due > 0 && <span style={{ color: '#f59e0b', fontWeight: 700, marginLeft: 6 }}> · {r.due} due</span>}
+                  {r.due > 0 && <span style={{ color: '#f59e0b', fontWeight: 700, marginLeft: 6 }}> · {r.due} na op.</span>}
                 </span>
               </div>
               <div style={{ height: 6, borderRadius: 4, background: 'var(--border)', overflow: 'hidden' }}>

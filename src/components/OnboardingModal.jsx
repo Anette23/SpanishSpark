@@ -7,10 +7,10 @@ export default function OnboardingModal({ onClose }) {
   }
 
   const features = [
-    { emoji: '🔥', text: 'Build a daily streak — just 2 minutes counts' },
-    { emoji: '🤖', text: 'Get AI feedback on your writing and speaking' },
-    { emoji: '📖', text: 'Reading, grammar, vocabulary and 8 more exercises' },
-    { emoji: '📊', text: 'Track your progress and fix weak spots' },
+    { emoji: '🔥', text: 'Buduj dennú sériu — stačia 2 minúty' },
+    { emoji: '🤖', text: 'Získaj AI spätnú väzbu na tvoje písanie a rozprávanie' },
+    { emoji: '📖', text: 'Čítanie, gramatika, slovná zásoba a 8 ďalších cvičení' },
+    { emoji: '📊', text: 'Sleduj svoj pokrok a opravuj slabé miesta' },
   ]
 
   return (
@@ -54,7 +54,7 @@ export default function OnboardingModal({ onClose }) {
         </div>
 
         <button className="btn-primary" onClick={handleStart} style={{ width: '100%', fontSize: 16 }}>
-          Get started! →
+          Začnime! →
         </button>
       </div>
     </div>

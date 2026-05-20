@@ -7,9 +7,9 @@ import TranslatableText from './TranslatableText'
 
 const LEVELS = ['A1', 'A2']
 const DIFFICULTY_OPTIONS = [
-  { label: 'Too easy', value: 'easy', color: 'var(--blue)' },
-  { label: 'Just right', value: 'ok', color: 'var(--green)' },
-  { label: 'Too hard', value: 'hard', color: '#ef4444' },
+  { label: 'Príliš ľahký', value: 'easy', color: 'var(--blue)' },
+  { label: 'Akorát',       value: 'ok',   color: 'var(--green)' },
+  { label: 'Príliš ťažký', value: 'hard', color: '#ef4444' },
 ]
 
 // ── Level picker ──────────────────────────────────────────────────────────────
@@ -41,19 +41,19 @@ function LevelPicker({ onStart, onBack }) {
 
   return (
     <div className="task-session">
-      <button className="btn-back" onClick={onBack}>← Back</button>
+      <button className="btn-back" onClick={onBack}>← Späť</button>
 
       <div className="task-header accent-blue">
         <span className="task-icon">📖</span>
         <div>
-          <h2>Reading</h2>
-          <p className="task-subtitle">Choose your level</p>
+          <h2>Čítanie</h2>
+          <p className="task-subtitle">Vyber si úroveň</p>
         </div>
       </div>
 
       <div className="prompt-box" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
         <p style={{ fontSize: 15, color: 'var(--text)', lineHeight: 1.5 }}>
-          Read short Spanish texts and answer comprehension questions. Tap any word to translate it to Slovak.
+          Čítaj krátke španielske texty a odpovedaj na otázky. Klepni na akékoľvek slovo a preložíš ho do slovenčiny.
         </p>
 
         <div style={{ display: 'flex', gap: 8 }}>
@@ -70,8 +70,8 @@ function LevelPicker({ onStart, onBack }) {
         </div>
 
         <div style={{ fontSize: 13, color: 'var(--muted)' }}>
-          {selectedLevel === 'A1' && 'Basic topics, very simple sentences, common everyday words.'}
-          {selectedLevel === 'A2' && 'Simple everyday situations, familiar topics, straightforward sentences.'}
+          {selectedLevel === 'A1' && 'Základné témy, jednoduché vety, bežné každodenné slová.'}
+          {selectedLevel === 'A2' && 'Jednoduché každodenné situácie, známe témy, priamočiare vety.'}
         </div>
 
         {/* Progress bar */}
@@ -87,30 +87,30 @@ function LevelPicker({ onStart, onBack }) {
               }} />
             </div>
             <span style={{ fontSize: 13, fontWeight: 700, color: 'var(--muted)', whiteSpace: 'nowrap' }}>
-              {done}/{total} read
+              {done}/{total} prečítaných
             </span>
           </div>
 
           <div style={{ display: 'flex', gap: 12, fontSize: 13 }}>
             {hasNew && (
               <span style={{ color: 'var(--purple)', fontWeight: 600 }}>
-                📄 {unread} new
+                📄 {unread} nových
               </span>
             )}
             {hasReview && (
               <span style={{ color: '#f59e0b', fontWeight: 600 }}>
-                🔁 {review} to review
+                🔁 {review} na opakovanie
               </span>
             )}
             {!canStart && (
-              <span style={{ color: 'var(--green)', fontWeight: 600 }}>✓ All read!</span>
+              <span style={{ color: 'var(--green)', fontWeight: 600 }}>✓ Všetko prečítané!</span>
             )}
             {!canStart && (
               <button
                 onClick={handleReset}
                 style={{ fontSize: 12, color: 'var(--purple)', background: 'none', border: 'none', cursor: 'pointer', fontWeight: 600, textDecoration: 'underline', padding: 0, marginLeft: 'auto' }}
               >
-                Reset & repeat
+                Resetovať a opakovať
               </button>
             )}
           </div>
@@ -123,7 +123,7 @@ function LevelPicker({ onStart, onBack }) {
         disabled={!canStart}
         style={{ opacity: canStart ? 1 : 0.45 }}
       >
-        {!canStart ? 'No new texts — reset to repeat' : 'Start reading →'}
+        {!canStart ? 'Žiadne nové texty — resetuj a opakuj' : 'Začať čítanie →'}
       </button>
     </div>
   )
@@ -132,21 +132,20 @@ function LevelPicker({ onStart, onBack }) {
 // ── Main session ──────────────────────────────────────────────────────────────
 
 export default function ReadingSession({ onBack }) {
-  const [selectedLevel, setSelectedLevel] = useState(null) // null = show picker
+  const [selectedLevel, setSelectedLevel] = useState(null)
   const [exercises, setExercises] = useState([])
   const [idx, setIdx] = useState(0)
-  const [phase, setPhase] = useState('read') // read | questions | done | react | finished
+  const [phase, setPhase] = useState('read')
   const [answers, setAnswers] = useState([])
   const [scores, setScores] = useState([])
-  const [lookedUp, setLookedUp] = useState([]) // {word, translation} per current text
+  const [lookedUp, setLookedUp] = useState([])
   const [diffChosen, setDiffChosen] = useState(null)
   const [reaction, setReaction] = useState('')
-  const [reactionFeedback, setReactionFeedback] = useState(null) // null | 'loading' | string
-  const [xpEarned, setXpEarned] = useState(0) // XP for current text
+  const [reactionFeedback, setReactionFeedback] = useState(null)
+  const [xpEarned, setXpEarned] = useState(0)
   const [ttsActive, setTtsActive] = useState(false)
   const ttsRef = useRef(null)
 
-  // Always cancel TTS when this component unmounts
   useEffect(() => () => { window.speechSynthesis?.cancel() }, [])
 
   function handleStart(level) {
@@ -169,8 +168,6 @@ export default function ReadingSession({ onBack }) {
     setSelectedLevel(null)
   }
 
-  // ── TTS ────────────────────────────────────────────────────────────────────
-
   function stopTTS() {
     window.speechSynthesis?.cancel()
     setTtsActive(false)
@@ -192,16 +189,12 @@ export default function ReadingSession({ onBack }) {
     setTtsActive(true)
   }
 
-  // ── Word lookup tracking ───────────────────────────────────────────────────
-
   const handleLookup = useCallback(({ word, translation }) => {
     setLookedUp(prev => {
       if (prev.some(w => w.word === word)) return prev
       return [...prev, { word, translation }]
     })
   }, [])
-
-  // ── Questions ──────────────────────────────────────────────────────────────
 
   function handleStartQuestions() {
     stopTTS()
@@ -223,7 +216,6 @@ export default function ReadingSession({ onBack }) {
     const total = ex.questions.length
     const isPerfect = correct === total
 
-    // XP: +5 per text, +5 bonus for 100%
     const xp = 5 + (isPerfect ? 5 : 0)
     setXpEarned(xp)
     addReadingXP(xp)
@@ -233,14 +225,10 @@ export default function ReadingSession({ onBack }) {
     setPhase('done')
   }
 
-  // ── Difficulty ─────────────────────────────────────────────────────────────
-
   function handleDifficulty(value) {
     setDiffChosen(value)
     saveDifficulty(ex.id, value)
   }
-
-  // ── Reaction / AI feedback ─────────────────────────────────────────────────
 
   async function handleGetFeedback() {
     if (!reaction.trim() || reaction.trim().length < 10) return
@@ -249,11 +237,9 @@ export default function ReadingSession({ onBack }) {
       const { feedback } = await getFeedback('writing', reaction)
       setReactionFeedback(feedback)
     } catch {
-      setReactionFeedback('Could not get feedback — check your API key in Settings.')
+      setReactionFeedback('Spätnú väzbu sa nepodarilo načítať — skontroluj API kľúč v Nastaveniach.')
     }
   }
-
-  // ── Navigation ─────────────────────────────────────────────────────────────
 
   function handleNext() {
     stopTTS()
@@ -271,37 +257,33 @@ export default function ReadingSession({ onBack }) {
     }
   }
 
-  // ── Level picker ───────────────────────────────────────────────────────────
-
   if (!selectedLevel) {
     return <LevelPicker onStart={handleStart} onBack={onBack} />
   }
 
   const ex = exercises[idx]
 
-  // ── Finished screen ────────────────────────────────────────────────────────
-
   if (phase === 'finished' || !ex) {
     const totalCorrect = scores.reduce((a, b) => a + b, 0)
     const totalQ = exercises.slice(0, scores.length).reduce((a, e) => a + e.questions.length, 0)
     return (
       <div className="task-session">
-        <button className="btn-back" onClick={onBack}>← Back</button>
+        <button className="btn-back" onClick={onBack}>← Späť</button>
         <div className="session-complete">
           <div className="complete-icon">📖</div>
-          <h2>Session complete!</h2>
+          <h2>Session dokončená!</h2>
           <div className="reading-score-card" style={{ width: '100%' }}>
             <div className="reading-score-number">{totalCorrect}/{totalQ}</div>
-            <div className="reading-score-label">questions correct</div>
+            <div className="reading-score-label">správnych odpovedí</div>
           </div>
           <p style={{ color: 'var(--muted)', fontSize: 14, textAlign: 'center' }}>
-            Texts you scored under 75% will come back for review.
+            Texty, pri ktorých si skórovala pod 75%, sa vrátia na opakovanie.
           </p>
           <button className="btn-primary" onClick={handleBackToLevelPicker}>
-            Choose another level
+            Vybrať inú úroveň
           </button>
           <button className="btn-secondary" onClick={onBack}>
-            Back to dashboard
+            Späť na dashboard
           </button>
         </div>
       </div>
@@ -311,23 +293,16 @@ export default function ReadingSession({ onBack }) {
   const allAnswered = answers.length > 0 && answers.every(a => a !== null)
   const currentScore = scores[scores.length - 1]
   const isPerfect = currentScore === ex.questions.length
-  const isReview = exercises.slice(0, idx + 1).some(e => {
-    // was this a review (previously read) text?
-    const completed = typeof window !== 'undefined'
-      ? JSON.parse(localStorage.getItem('reading_progress') || '{}').completed || []
-      : []
-    return false // simplified — just track via score
-  })
 
   return (
     <div className="task-session">
-      <button className="btn-back" onClick={handleBackToLevelPicker}>← Back</button>
+      <button className="btn-back" onClick={handleBackToLevelPicker}>← Späť</button>
 
       <div className="task-header accent-blue">
         <span className="task-icon">📖</span>
         <div>
-          <h2>Reading · {selectedLevel}</h2>
-          <p className="task-subtitle">Text {idx + 1} of {exercises.length}</p>
+          <h2>Čítanie · {selectedLevel}</h2>
+          <p className="task-subtitle">Text {idx + 1} z {exercises.length}</p>
         </div>
       </div>
 
@@ -340,9 +315,9 @@ export default function ReadingSession({ onBack }) {
               <button
                 className={`reading-tts-btn ${ttsActive ? 'reading-tts-btn-active' : ''}`}
                 onClick={() => toggleTTS(ex.passage)}
-                title={ttsActive ? 'Stop' : 'Listen to text'}
+                title={ttsActive ? 'Zastaviť' : 'Počúvať text'}
               >
-                {ttsActive ? '⏹ Stop' : '🔊 Listen'}
+                {ttsActive ? '⏹ Zastaviť' : '🔊 Počúvať'}
               </button>
             </div>
             {ex.passage.split('\n\n').map((para, i, arr) => (
@@ -352,10 +327,10 @@ export default function ReadingSession({ onBack }) {
             ))}
           </div>
           <p style={{ fontSize: 13, color: 'var(--muted)', textAlign: 'center' }}>
-            Tap any word to see its Slovak translation
+            Klepni na akékoľvek slovo pre slovenský preklad
           </p>
           <button className="btn-primary" onClick={handleStartQuestions}>
-            Answer questions →
+            Odpovedať na otázky →
           </button>
         </>
       )}
@@ -363,7 +338,7 @@ export default function ReadingSession({ onBack }) {
       {/* ── Questions phase ───────────────────────────────────────────────── */}
       {phase === 'questions' && (
         <>
-          <div className="reading-q-header">Comprehension questions</div>
+          <div className="reading-q-header">Otázky porozumenia</div>
           {ex.questions.map((q, qi) => (
             <div key={qi} className="reading-question">
               <div className="reading-question-text">{qi + 1}. {q.q}</div>
@@ -394,7 +369,7 @@ export default function ReadingSession({ onBack }) {
             disabled={!allAnswered}
             style={{ opacity: allAnswered ? 1 : 0.5 }}
           >
-            See results
+            Zobraziť výsledky
           </button>
         </>
       )}
@@ -402,16 +377,14 @@ export default function ReadingSession({ onBack }) {
       {/* ── Done phase ────────────────────────────────────────────────────── */}
       {phase === 'done' && (
         <>
-          {/* Score + XP */}
           <div className="reading-score-card">
             <div className="reading-score-number">
               {currentScore}/{ex.questions.length}
             </div>
-            <div className="reading-score-label">correct on "{ex.title}"</div>
-            <div className="reading-xp-badge">+{xpEarned} XP {isPerfect ? '⭐ perfect!' : ''}</div>
+            <div className="reading-score-label">správne pri „{ex.title}"</div>
+            <div className="reading-xp-badge">+{xpEarned} XP {isPerfect ? '⭐ perfektné!' : ''}</div>
           </div>
 
-          {/* Answer review */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
             {ex.questions.map((q, qi) => (
               <div key={qi} style={{ background: 'var(--card)', border: '1px solid var(--border)', borderRadius: 12, padding: '12px 16px' }}>
@@ -421,17 +394,16 @@ export default function ReadingSession({ onBack }) {
                 </div>
                 {answers[qi] !== q.answer && (
                   <div style={{ fontSize: 13, color: 'var(--muted)', marginTop: 4 }}>
-                    Correct: {q.options[q.answer]}
+                    Správne: {q.options[q.answer]}
                   </div>
                 )}
               </div>
             ))}
           </div>
 
-          {/* Words looked up */}
           {lookedUp.length > 0 && (
             <div className="reading-looked-up">
-              <div className="reading-looked-up-title">Words you translated</div>
+              <div className="reading-looked-up-title">Slová, ktoré si preložila</div>
               <div className="reading-looked-up-chips">
                 {lookedUp.map(({ word, translation }) => (
                   <div key={word} className="reading-looked-up-chip">
@@ -444,9 +416,8 @@ export default function ReadingSession({ onBack }) {
             </div>
           )}
 
-          {/* Difficulty feedback */}
           <div className="reading-difficulty">
-            <div className="reading-difficulty-label">How was this text?</div>
+            <div className="reading-difficulty-label">Aký bol tento text?</div>
             <div className="reading-difficulty-row">
               {DIFFICULTY_OPTIONS.map(({ label, value, color }) => (
                 <button
@@ -462,10 +433,10 @@ export default function ReadingSession({ onBack }) {
           </div>
 
           <button className="btn-primary" onClick={() => setPhase('react')}>
-            Write a reaction
+            Napíš reakciu
           </button>
           <button className="btn-secondary" onClick={handleNext}>
-            {idx + 1 < exercises.length ? 'Skip → next text' : 'Finish session'}
+            {idx + 1 < exercises.length ? 'Preskočiť → ďalší text' : 'Ukončiť session'}
           </button>
         </>
       )}
@@ -474,7 +445,7 @@ export default function ReadingSession({ onBack }) {
       {phase === 'react' && (
         <>
           <div className="prompt-box">
-            <div className="prompt-label">Your turn</div>
+            <div className="prompt-label">Na rade si ty</div>
             <div className="prompt-text" style={{ fontSize: 15 }}>
               ¿Qué piensas sobre "{ex.title}"? Escribe 2–3 oraciones en español.
             </div>
@@ -496,17 +467,17 @@ export default function ReadingSession({ onBack }) {
               disabled={reaction.trim().length < 10}
               style={{ opacity: reaction.trim().length < 10 ? 0.5 : 1 }}
             >
-              Get AI feedback
+              Získať AI spätnú väzbu
             </button>
           )}
 
           {reactionFeedback === 'loading' && (
-            <p style={{ color: 'var(--muted)', textAlign: 'center' }}>⏳ Getting feedback...</p>
+            <p style={{ color: 'var(--muted)', textAlign: 'center' }}>⏳ Získavam spätnú väzbu...</p>
           )}
 
           {reactionFeedback && reactionFeedback !== 'loading' && (
             <div className="reading-feedback-box">
-              <div className="reading-feedback-label">AI Feedback</div>
+              <div className="reading-feedback-label">AI spätná väzba</div>
               <p style={{ fontSize: 14, lineHeight: 1.6, whiteSpace: 'pre-wrap' }}>{reactionFeedback}</p>
             </div>
           )}
@@ -515,7 +486,7 @@ export default function ReadingSession({ onBack }) {
             className={reactionFeedback && reactionFeedback !== 'loading' ? 'btn-primary btn-done' : 'btn-secondary'}
             onClick={handleNext}
           >
-            {idx + 1 < exercises.length ? 'Next text →' : 'Finish session ✓'}
+            {idx + 1 < exercises.length ? 'Ďalší text →' : 'Ukončiť session ✓'}
           </button>
         </>
       )}
