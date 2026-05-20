@@ -29,13 +29,13 @@ export default function GrammarCards({ onBack }) {
 
   return (
     <div className="task-session">
-      <button className="btn-back" onClick={onBack}>← Back</button>
+      <button className="btn-back" onClick={onBack}>← Späť</button>
 
       <div className="task-header accent-green">
         <span className="task-icon">📋</span>
         <div>
-          <h2>Grammar Cards</h2>
-          <p className="task-subtitle">Key rules — tap to explore</p>
+          <h2>Gramatické karty</h2>
+          <p className="task-subtitle">Kľúčové pravidlá — klepni pre rozbalenie</p>
         </div>
       </div>
 
@@ -91,7 +91,7 @@ export default function GrammarCards({ onBack }) {
           ))}
           {!expanded && card.examples.length > 2 && (
             <p style={{ fontSize: 13, color: 'var(--purple)', margin: 0, cursor: 'pointer' }}>
-              + {card.examples.length - 2} more examples — tap to expand
+              + {card.examples.length - 2} ďalšie príklady — klepni pre rozbalenie
             </p>
           )}
         </div>
@@ -107,16 +107,16 @@ export default function GrammarCards({ onBack }) {
 
       <div style={{ display: 'flex', gap: 8 }}>
         <button className="btn-secondary" onClick={handlePrev} style={{ flex: 1 }}>
-          ← Prev
+          ← Predch.
         </button>
         <button className="btn-primary" onClick={handleNext} style={{ flex: 1 }}>
-          Next →
+          Ďalej →
         </button>
       </div>
 
       {/* Overview list */}
       <div style={{ marginTop: 4 }}>
-        <div style={{ fontSize: 13, color: 'var(--muted)', fontWeight: 600, marginBottom: 8 }}>All {level} cards:</div>
+        <div style={{ fontSize: 13, color: 'var(--muted)', fontWeight: 600, marginBottom: 8 }}>Všetky karty {level}:</div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
           {cards.map((c, i) => (
             <button
