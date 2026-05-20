@@ -14,7 +14,7 @@ export default async function handler(req, res) {
     return res.status(503).json({ error: 'Not configured' })
   }
 
-  const { messages, mode, practicedPhrases } = req.body ?? {}
+  const { messages, mode, practicedPhrases, sessionContext } = req.body ?? {}
 
   if (!Array.isArray(messages) || messages.length === 0) {
     return res.status(400).json({ error: 'Missing messages' })
@@ -54,6 +54,10 @@ Rules:
 - Use simple structures: no subjunctive, no complex conditionals.
 - Do NOT explicitly correct grammar mistakes during the conversation — just be a natural partner.
 - Be warm, encouraging, and patient.${
+  sessionContext?.prompt
+    ? `\n- Today the user did a ${sessionContext.taskType} exercise with this prompt: "${sessionContext.prompt}".${sessionContext.text ? ` They wrote/said: "${sessionContext.text.slice(0, 300)}". Build on this topic naturally — ask follow-up questions about it.` : ' Continue the conversation around this topic.'}`
+    : ''
+}${
   Array.isArray(practicedPhrases) && practicedPhrases.length > 0
     ? `\n- The user has recently practiced these Spanish phrases: ${practicedPhrases.map(p => `"${p}"`).join(', ')}. Naturally create a context where they can use one.`
     : ''

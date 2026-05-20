@@ -7,6 +7,7 @@ import { formatDuration, todayStr, saveTaskResult } from '../habitStore'
 import { getFeedback } from '../api'
 import { extractAndStore } from '../weakSpotsStore'
 import { getWeakSpots } from '../weakSpotsStore'
+import { saveDailySession } from '../sentenceStore'
 
 const MAX_LENGTH = 2000
 
@@ -32,6 +33,8 @@ export default function TaskSession({ taskType, duration, onComplete, onBack }) 
     onComplete()
     // Save text immediately so data isn't lost if the browser closes before feedback arrives
     saveTaskResult(date, taskType, { text: feedbackText, feedback: null, prompt })
+    // Save context so ChatSession can follow up on today's topic
+    if (feedbackText.trim()) saveDailySession({ taskType, prompt, text: feedbackText })
 
     if (!feedbackText.trim()) return
 

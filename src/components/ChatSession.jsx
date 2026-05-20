@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
 import FeedbackView from './FeedbackView'
 import { sendChatMessage, getChatFeedback } from '../api'
-import { getRecentPhrases } from '../sentenceStore'
+import { getRecentPhrases, getTodayContext } from '../sentenceStore'
 
 function useVoiceInput(onResult) {
   const [isRecording, setIsRecording] = useState(false)
@@ -74,14 +74,19 @@ const STARTERS = [
   "Cuéntame algo sobre tu familia.",
 ]
 
-function getStarter() {
+function getStarter(ctx) {
+  if (ctx) {
+    const task = ctx.taskType === 'writing' ? 'escribiste' : 'hablaste'
+    return `¡Hola! Hoy ${task} sobre esto: "${ctx.prompt}" — ¡qué bien! ¿Puedes contarme más sobre el tema?`
+  }
   return STARTERS[Math.floor(Math.random() * STARTERS.length)]
 }
 
 export default function ChatSession({ onBack }) {
   const practicedPhrases = getRecentPhrases(7)
+  const todayCtx = getTodayContext()
   const [messages, setMessages]       = useState([
-    { role: 'assistant', content: getStarter() },
+    { role: 'assistant', content: getStarter(todayCtx) },
   ])
   const [input, setInput]             = useState('')
   const [loading, setLoading]         = useState(false)
@@ -111,7 +116,7 @@ export default function ChatSession({ onBack }) {
     setError(null)
 
     try {
-      const { reply } = await sendChatMessage(newMessages, practicedPhrases)
+      const { reply } = await sendChatMessage(newMessages, practicedPhrases, todayCtx)
       setMessages(prev => [...prev, { role: 'assistant', content: reply }])
     } catch (e) {
       if (e.message === 'NOT_CONFIGURED') {
@@ -154,7 +159,15 @@ export default function ChatSession({ onBack }) {
         )}
       </div>
 
-      {practicedPhrases.length > 0 && (
+      {todayCtx && (
+        <div className="chat-phrases-bar" style={{ background: 'linear-gradient(90deg, #ede9fe, #ddd6fe)', borderColor: '#a78bfa' }}>
+          <span className="chat-phrases-label" style={{ color: '#6d28d9' }}>
+            {todayCtx.taskType === 'writing' ? '✍️' : '🎤'} Dnešné cvičenie:
+          </span>
+          <span style={{ fontSize: 13, color: '#4c1d95', fontStyle: 'italic' }}>"{todayCtx.prompt}"</span>
+        </div>
+      )}
+      {!todayCtx && practicedPhrases.length > 0 && (
         <div className="chat-phrases-bar">
           <span className="chat-phrases-label">Practicing:</span>
           {practicedPhrases.slice(0, 4).map(p => (

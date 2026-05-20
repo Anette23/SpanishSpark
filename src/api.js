@@ -5,11 +5,11 @@ const CHAT_HEADERS = {
   'x-feedback-token': FEEDBACK_TOKEN,
 }
 
-export async function sendChatMessage(messages, practicedPhrases = []) {
+export async function sendChatMessage(messages, practicedPhrases = [], sessionContext = null) {
   const res = await fetch('/api/chat', {
     method: 'POST',
     headers: CHAT_HEADERS,
-    body: JSON.stringify({ messages, mode: 'message', practicedPhrases }),
+    body: JSON.stringify({ messages, mode: 'message', practicedPhrases, sessionContext }),
   })
   if (res.status === 401) throw new Error('UNAUTHORIZED')
   if (res.status === 503) throw new Error('NOT_CONFIGURED')

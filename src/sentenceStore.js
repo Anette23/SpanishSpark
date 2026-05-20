@@ -28,3 +28,22 @@ export function getRecentPhrases(days = 7) {
     .filter(p => { if (seen.has(p)) return false; seen.add(p); return true })
     .slice(0, 10)
 }
+
+// ── Daily session context (writing / speaking task) ───────────────────────────
+
+export function saveDailySession({ taskType, prompt, text }) {
+  try {
+    localStorage.setItem('daily_session_context', JSON.stringify({
+      date: today(), taskType, prompt, text: text.slice(0, 800)
+    }))
+  } catch {}
+}
+
+// Returns today's session context, or null if none / from a previous day
+export function getTodayContext() {
+  try {
+    const data = JSON.parse(localStorage.getItem('daily_session_context') || 'null')
+    if (!data || data.date !== today()) return null
+    return data
+  } catch { return null }
+}
