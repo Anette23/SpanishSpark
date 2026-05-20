@@ -6,7 +6,7 @@ export default function TranslatableText({ text, className, onLookup }) {
   const [popup, setPopup] = useState(null) // { word, context, translation, loading, saved }
 
   function handleWordTap(word, fullText) {
-    const clean = word.replace(/[^a-zA-Z'-]/g, '').toLowerCase()
+    const clean = word.replace(/[^a-zA-ZáéíóúüñÁÉÍÓÚÜÑ'-]/g, '').toLowerCase()
     if (!clean || clean.length < 2) return
     const alreadySaved = isWordSaved(clean)
     setPopup({ word: clean, context: fullText, translation: null, loading: true, saved: alreadySaved })
@@ -24,14 +24,14 @@ export default function TranslatableText({ text, className, onLookup }) {
     setPopup(p => ({ ...p, saved: true }))
   }
 
-  // Tokenise: keep words and non-word tokens (spaces, punctuation) separate
-  const tokens = text.split(/(\b[a-zA-Z'-]+\b)/)
+  // Tokenise: keep words (including Spanish accented chars) and punctuation separate
+  const tokens = text.split(/([\wáéíóúüñÁÉÍÓÚÜÑ'-]+)/)
 
   return (
     <>
       <span className={className}>
         {tokens.map((token, i) => {
-          if (/^[a-zA-Z'-]+$/.test(token) && token.length >= 2) {
+          if (/^[\wáéíóúüñÁÉÍÓÚÜÑ'-]+$/.test(token) && token.length >= 2) {
             return (
               <span
                 key={i}

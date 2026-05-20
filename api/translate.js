@@ -12,13 +12,11 @@ export default async function handler(req, res) {
   if (!word || typeof word !== 'string' || word.length > 100) {
     return res.status(400).json({ error: 'Invalid word' })
   }
-  if (context !== undefined && (typeof context !== 'string' || context.length > 500)) {
-    return res.status(400).json({ error: 'Invalid context' })
-  }
+  const ctx = typeof context === 'string' ? context.slice(0, 500) : ''
 
-  const prompt = context
-    ? `Translate the English word or phrase "${word}" to Slovak. The sentence context is: "${context}". Reply with ONLY the Slovak translation — one short phrase, no explanation.`
-    : `Translate the English word "${word}" to Slovak. Reply with ONLY the Slovak translation — one short phrase, no explanation.`
+  const prompt = ctx
+    ? `Translate the Spanish word or phrase "${word}" to Slovak. The sentence context is: "${ctx}". Reply with ONLY the Slovak translation — one short phrase, no explanation.`
+    : `Translate the Spanish word "${word}" to Slovak. Reply with ONLY the Slovak translation — one short phrase, no explanation.`
 
   try {
     const response = await fetch('https://api.anthropic.com/v1/messages', {
