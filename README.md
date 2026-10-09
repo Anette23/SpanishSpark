@@ -2,7 +2,7 @@
 
 A habit-forming app for daily Spanish practice, built on the **2-minute rule** from James Clear's *Atomic Habits*.
 
-🌐 **Live app:** [spanishspark.vercel.app](https://spanishspark.vercel.app/)
+🌐 **Live app:** [spanishspark.vercel.app](https://spanish-spark.vercel.app/)
 
 ---
 
